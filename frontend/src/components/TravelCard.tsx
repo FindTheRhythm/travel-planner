@@ -43,7 +43,7 @@ const TravelCard: React.FC<Props> = ({ id, title, description, image, tags }) =>
         </Box>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => navigate(`/travel/${id}`)}>
+        <Button size="small" onClick={() => navigate(`/travels/${id}`)}>
           Подробнее
         </Button>
       </CardActions>

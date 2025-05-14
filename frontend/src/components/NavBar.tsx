@@ -12,6 +12,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { API_BASE_URL } from '../config';
 
 interface NavBarProps {
   user: {
@@ -113,21 +114,25 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
           onClick={handleTitleClick}
           sx={{
             color: 'inherit', 
-            textDecoration: 'none', 
-            flexGrow: 1,
+            textDecoration: 'none',
             cursor: 'pointer',
             fontSize: '1.25rem',
             fontWeight: 500,
-            zIndex: 1
+            zIndex: 1,
+            padding: '8px 16px',
+            '&:hover': {
+              textDecoration: 'none',
+              color: 'inherit'
+            }
           }}
         >
           Планировщик Путешествий
         </Typography>
+        <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ height: '100%', display: 'flex' }}>
           <NavButton to="/travels/explore">
             <SearchIcon sx={{ fontSize: 24 }} />
           </NavButton>
-          <NavButton to="/travels">Мои Места</NavButton>
           <NavButton to="/about">О Проекте</NavButton>
           {user ? (
             <>
@@ -161,14 +166,25 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
                     }
                   }}
                 >
-                  <PersonIcon 
-                    sx={{ 
-                      color: 'transparent',
-                      stroke: 'white',
-                      strokeWidth: 1,
-                      fontSize: 28
-                    }} 
-                  />
+                  {user.avatar ? (
+                    <Avatar
+                      src={`${API_BASE_URL}/uploads/avatars/${user.avatar}`}
+                      sx={{
+                        width: 32,
+                        height: 32,
+                        border: '1px solid white'
+                      }}
+                    />
+                  ) : (
+                    <PersonIcon 
+                      sx={{ 
+                        color: 'transparent',
+                        stroke: 'white',
+                        strokeWidth: 1,
+                        fontSize: 28
+                      }} 
+                    />
+                  )}
                   <Typography 
                     sx={{ 
                       display: { xs: 'none', sm: 'block' },

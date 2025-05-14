@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Grid, Pagination, TextField, FormControl, Container, Typography, Card, CardContent, Button, Chip, Autocomplete } from '@mui/material';
+import { API_BASE_URL } from '../config';
 
 interface Tour {
   id: number;
@@ -32,7 +33,7 @@ const TourExplorer: React.FC = () => {
   }, [window.location.search]); // Реагируем на изменения URL
 
   useEffect(() => {
-    fetch('http://localhost:5000/allTours')
+    fetch(`${API_BASE_URL}/all-tours`)
       .then(response => response.json())
       .then(data => {
         setTours(data);

@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
             </Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
               <IconButton 
-                href="https://t.me/travelplanner" 
+                href="https://t.me/Find_The_Rhythm" 
                 target="_blank"
                 sx={{ 
                   color: '#fff',

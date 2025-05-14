@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -15,6 +15,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { API_BASE_URL } from '../config';
 
 interface Travel {
   id: number;
@@ -50,17 +51,22 @@ interface TravelDetail {
 
 const TravelDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [travel, setTravel] = useState<Travel | null>(null);
   const [details, setDetails] = useState<TravelDetail | null>(null);
   const [weather, setWeather] = useState<any>(null);
   const [weatherError, setWeatherError] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
+    let travelData: Travel | null = null;
+
     // Проверяем, сохранен ли тур у пользователя
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     if (user) {
-      fetch(`http://localhost:5000/travels/user/${user.id}`)
+      fetch(`${API_BASE_URL}/travels/user/${user.id}`)
         .then(res => res.json())
         .then(tours => {
           setIsSaved(tours.some((t: Travel) => t.id === Number(id)));
@@ -69,11 +75,17 @@ const TravelDetails: React.FC = () => {
     }
 
     // Получаем данные тура из popular-tours
-    fetch(`http://localhost:5000/popularTours/${id}`)
-      .then(res => res.json())
+    fetch(`${API_BASE_URL}/popular-tours/${id}`)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Tour not found');
+        }
+        return res.json();
+      })
       .then(data => {
         if (data) {
           setTravel(data);
+          travelData = data;
         } else {
           throw new Error('Tour not found');
         }
@@ -81,22 +93,30 @@ const TravelDetails: React.FC = () => {
       .catch(err => {
         console.error('Ошибка загрузки данных о путешествии:', err);
         setTravel(null);
+        setIsLoading(false);
+        navigate('/404');
+        return;
       });
 
     // Получаем детали тура
-    fetch('http://localhost:5000/travel-details')
+    fetch(`${API_BASE_URL}/travel-details`)
       .then(res => res.json())
       .then((data: TravelDetail[]) => {
         const found = data.find(detail => detail.id === Number(id));
         if (found) {
           setDetails(found);
+        } else {
+          throw new Error('Travel details not found');
         }
+        setIsLoading(false);
       })
       .catch(err => {
         console.error('Ошибка загрузки подробностей тура:', err);
         setDetails(null);
+        setIsLoading(false);
+        navigate('/404');
       });
-  }, [id]);
+  }, [id, navigate]);
 
   useEffect(() => {
     const API_KEY = '1da204be3fa32bb8734780b5a00f188e';
@@ -129,7 +149,7 @@ const TravelDetails: React.FC = () => {
     if (!travel) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/travels/user/${user.id}/add`, {
+      const res = await fetch(`${API_BASE_URL}/travels/user/${user.id}/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,8 +171,17 @@ const TravelDetails: React.FC = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <Container sx={{ py: 4, textAlign: 'center' }}>
+        <Typography>Загрузка данных о туре...</Typography>
+      </Container>
+    );
+  }
+
   if (!travel || !details) {
-    return <Container><Typography>Загрузка данных о туре...</Typography></Container>;
+    navigate('/404');
+    return null;
   }
 
   return (

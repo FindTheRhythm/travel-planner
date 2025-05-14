@@ -1,17 +1,17 @@
 // frontend/src/App.tsx
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
-import TravelList from './pages/TravelList';
-import TourExplorer from './pages/TourExplorer';
-import TravelDetails from './pages/TravelDetails';
-import About from './pages/About';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import TourExplorer from './pages/TourExplorer';
+import TravelDetails from './pages/TravelDetails';
+import About from './pages/About';
+import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import ProtectedRoute from './components/ProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -24,13 +24,21 @@ interface User {
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // При монтировании проверяем localStorage на сохранённый user
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('Error parsing stored user:', error);
+        localStorage.removeItem('user');
+      }
     }
+    setIsLoading(false);
   }, []);
 
   // Выход пользователя: удаляем из localStorage
@@ -42,6 +50,11 @@ function App() {
   const handleUpdateUser = (updatedUser: User) => {
     setUser(updatedUser);
     localStorage.setItem('user', JSON.stringify(updatedUser));
+  };
+
+  const handleLogin = (user: User) => {
+    setUser(user);
+    localStorage.setItem('user', JSON.stringify(user));
   };
 
   return (
@@ -66,18 +79,33 @@ function App() {
         }}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/travels" element={<TravelList />} />
+            <Route path="/login" element={<Login setUser={setUser} />} />
+            <Route path="/register" element={<Register />} />
+            <Route 
+              path="/profile" 
+              element={
+                isLoading ? (
+                  <Box sx={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    alignItems: 'center',
+                    minHeight: '60vh' 
+                  }}>
+                    <CircularProgress />
+                  </Box>
+                ) : localStorage.getItem('user') ? (
+                  <Profile user={JSON.parse(localStorage.getItem('user')!)} onUpdateUser={handleUpdateUser} />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              } 
+            />
+            <Route path="/travels" element={<Navigate to="/profile" />} />
             <Route path="/travels/explore" element={<TourExplorer />} />
             <Route path="/travels/:id" element={<TravelDetails />} />
             <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login setUser={setUser} />} />
-            <Route path="/register" element={<Register />} />
-            {user && (
-              <Route 
-                path="/profile" 
-                element={<Profile user={user} onUpdateUser={handleUpdateUser} />} 
-              />
-            )}
+            <Route path="/404" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/404" />} />
           </Routes>
         </Box>
         <Footer />

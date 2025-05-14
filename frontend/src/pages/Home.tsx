@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import TravelTipsCarousel from '../components/TravelTipsCarousel';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
+import { API_BASE_URL } from '../config';
 
 interface Travel {
   id: number;
@@ -65,7 +66,7 @@ const Home: React.FC = () => {
 
   // Подгружаем популярные туры с сервера
   useEffect(() => {
-    fetch('http://localhost:5000/popularTours')
+    fetch(`${API_BASE_URL}/popular-tours`)
       .then(res => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -91,7 +92,7 @@ const Home: React.FC = () => {
 
   // Подгружаем советы с сервера
   useEffect(() => {
-    fetch('http://localhost:5000/tips')
+    fetch(`${API_BASE_URL}/tips`)
       .then(res => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
