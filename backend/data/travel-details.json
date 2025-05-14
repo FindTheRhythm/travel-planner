@@ -61,27 +61,27 @@
         "id": 103,
         "name": "Moscow, Russia",
         "images": [
-            {"photo":"/images/moscow/moscow1.jpg", "autor":""},
-            {"photo":"/images/moscow/moscow2.jpg", "autor":""},
-            {"photo":"/images/moscow/moscow3.jpg", "autor":""},
-            {"photo":"/images/moscow/moscow4.jpg", "autor":""},
-            {"photo":"/images/moscow/moscow5.jpg", "autor":""},
-            {"photo":"/images/moscow/moscow6.jpg", "autor":""},
-            {"photo":"/images/moscow/moscow7.jpg", "autor":""},
-            {"photo":"/images/moscow/moscow8.jpg", "autor":""},
-            {"photo":"/images/moscow/moscow9.jpg", "autor":""},
-            {"photo":"/images/moscow/moscow10.jpg", "autor":""}
+            {"photo":"https://wikiway.com/upload/hl-photo/974/738/moskva_5.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/hl-photo/3bf/b2d/moskva_10.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/e8d/2_moskva-vecherom.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/5ee/24_moskva_reka_zimoy.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/4e6/30_gostinitsa-kosmos.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/518/37_moskva-zimoy.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/adb/23_vid-na-kreml.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/ec1/63.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/ee6/66_khram-khrista-spasitelya.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/hl-photo/9a4/e3c/moskva_6.jpg", "autor":""}
         ],
         "firstDescription": "Если вы живёте в Москве, вам повезло — даже ехать никуда не нужно. Чтобы полюбоваться одним из самых красивых городов мира, достаточно выйти из дома.",
         "secondDescription": "Сердце российской столицы — Красная площадь и величественный Кремль с его храмами и музеями. На главной площади страны также расположился Покровский собор с цветными куполами — одна из любимых туристических достопримечательностей.",
         "thirdDescription": "Прогуляйтесь по Тверской до памятника Пушкину, а затем сверните в переулки, опутавшие Патриаршие пруды. Или оцените ландшафтный дизайн парка «Зарядье», пройдясь по нему до Китай-города с его шумными барами и ресторанами. Изучить современную архитектуру можно в районе Сити — здесь несколько высотных смотровых площадок, с которых Москву видно как на ладони. Если же вам по душе советское прошлое города, отыщите на карте все сталинские высотки и устройте ностальгическую экскурсию под кодовым названием «7 сестёр».",
         "places": [
-            {"id": 1031, "name": "", "photo": "/images/moscow/m1.jpg", "description": "", "link": ""},
-            {"id": 1032, "name": "", "photo": "/images/moscow/m2.jpg", "description": "", "link": ""},
-            {"id": 1033, "name": "", "photo": "/images/moscow/m3.jpg", "description": "", "link": ""},
-            {"id": 1034, "name": "", "photo": "/images/moscow/m4.jpg", "description": "", "link": ""},
-            {"id": 1035, "name": "", "photo": "/images/moscow/m5.jpg", "description": "", "link": ""},
-            {"id": 1036, "name": "", "photo": "/images/moscow/m6.jpg", "description": "", "link": ""}
+            {"id": 1031, "name": "Красная площадь", "photo": "https://wikiway.com/upload/hl-photo/ace/0e6/krasnaya_ploshad_129.jpg", "description": "Красная площадь – основной символ и наиболее известное историческое место Москвы. Она располагается в Центральном административном округе между Кремлем и Китай-городом. Красная площадь и расположенные на ней архитектурные сооружения внесены в список объектов Всемирного наследия ЮНЕСКО. Это историческое место, обязательное для посещения иностранцами.", "link": "https://wikiway.com/russia/moskva/krasnaya-ploshchad/map/"},
+            {"id": 1032, "name": "Храм Василия Блаженного", "photo": "https://wikiway.com/upload/hl-photo/d37/e83/hram_vasiliya_blazhennogo_153.jpg", "description": "Храм Василия Блаженного был построен по приказу царя Ивана Грозного в память событий Казанского похода. Собор в народе именовался Покрова на Рву: он был построен рядом с глубоким рвом, проходившим вдоль восточной стены Кремля. Позднее в одном из приделов храма был похоронен Василий Блаженный, благодаря которому собор приобрел свое новое название.", "link": "https://wikiway.com/russia/moskva/khram-vasiliya-blazhennogo/map/"},
+            {"id": 1033, "name": "Государственная Третьяковская галерея", "photo": "https://wikiway.com/upload/hl-photo/87f/9ca/tretyakovskaya_galereya_119.jpg", "description": "Третьяковская галерея является самым известным художественным музеем в Москве, она же — главная сокровищница национального искусства России, отражающая значительный вклад нашей страны в мировую культуру.", "link": "https://wikiway.com/russia/moskva/tretyakovskaya-galereya/map/"},
+            {"id": 1034, "name": "Большой театр", "photo": "https://wikiway.com/upload/hl-photo/901/47e/bolshoi_teatr_15.jpg", "description": "Большой театр — национальное достояние страны. Старейший музыкальный театр России расположен практически в самом центре Москвы, на Театральной Площади, недалеко от Кремля. Полное наименование — Государственный Академический Большой театр оперы и балета России.", "link": "https://wikiway.com/russia/moskva/bolshoy-teatr/map/"},
+            {"id": 1035, "name": "Парк «Зарядье»", "photo": "https://wikiway.com/upload/uf/9b3/zaryadie_8.jpg", "description": "Парк «Зарядье» – неповторимый архитектурный проект, который послужил величественной реинкарнацией одноимённого района Москвы. До 2006 года на этом месте возвышался гостиничный комплекс «Россия». После демонтажа здания территорию отвели под организацию «парка настоящего будущего».", "link": "https://wikiway.com/russia/moskva/park-zaryade/map/"},
+            {"id": 1036, "name": "Москва-Сити", "photo": "https://wikiway.com/upload/hl-photo/fa4/574/moscow_city_81.jpg", "description": "«Москва-Сити» — это Москва будущего, строящийся международный деловой квартал из ультрасовременных небоскрёбов. Уникальная для России и Восточной Европы зона деловой активности объединяет в себе апартаменты для жилья, офисные здания, многочисленные площадки для торговли и отдыха.", "link": "https://wikiway.com/russia/moskva/moskva-siti/map/"}
         ],
         "hotels": "https://travel.yandex.ru/hotels/moscow/",
         "flights": "https://travel.yandex.ru/flights/cities/moscow/"
@@ -90,27 +90,63 @@
         "id": 104,
         "name": "Barcelona, Spain",
         "images": [
-            {"photo":"/images/barcelona/barcelona1.jpg", "autor":""},
-            {"photo":"/images/barcelona/barcelona2.jpg", "autor":""},
-            {"photo":"/images/barcelona/barcelona3.jpg", "autor":""},
-            {"photo":"/images/barcelona/barcelona4.jpg", "autor":""},
-            {"photo":"/images/barcelona/barcelona5.jpg", "autor":""},
-            {"photo":"/images/barcelona/barcelona6.jpg", "autor":""},
-            {"photo":"/images/barcelona/barcelona7.jpg", "autor":""},
-            {"photo":"/images/barcelona/barcelona8.jpg", "autor":""},
-            {"photo":"/images/barcelona/barcelona9.jpg", "autor":""},
-            {"photo":"/images/barcelona/barcelona10.jpg", "autor":""}
+            {"photo":"https://wikiway.com/upload/hl-photo/447/524/barselona_9.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/25e/2-goticheskiy-kvartal.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/8cd/3-dom-casa-mila.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/395/18-nochnaya-barcelona.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/5b5/9-krishi.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/5ee/16-Eixample.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/177/Rayon-Grasiya-v-Barselone-5.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/5c9/Ploshchad-Ispanii-v-Barselone.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/4fb/9-kafedralmiy-sobor-barceloni.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/9b9/Goticheskiy-kvartal-v-Barselone-5.jpg", "autor":""}
         ],
-        "firstDescription": "",
-        "secondDescription": "",
-        "thirdDescription": "",
+        "firstDescription": "Любимица туристов всех возрастов. Молодёжь в Барселону привлекают шумные вечеринки и бары, публику постарше — хорошие рестораны со свежей паэльей и разнообразная архитектура.",
+        "secondDescription": "Самая известное городское место — собор Святого Семейства с устремлёнными ввысь башнями, которые напоминают веретено. Несмотря на то что собор — самый масштабный долгострой на планете, он входит в список достопримечательностей, которые обязательно стоит увидеть хоть раз в жизни.",
+        "thirdDescription": "Ещё одна визитная карточка Барселоны — творчество архитектора Антонио Гауди. Он, например, создал жилой дом — Каса-Бальо — в котором нет прямых углов. Тот же гений воплотил в жизнь проект легендарного парка Гуэль с его мозаичными скамейками и причудливыми скульптурами. Идеально для летней фотосессии. ",
         "places": [
-            {"id": 1041, "name": "", "photo": "/images/barcelona/b1.jpg", "description": "", "link": ""},
-            {"id": 1042, "name": "", "photo": "/images/barcelona/b2.jpg", "description": "", "link": ""},
-            {"id": 1043, "name": "", "photo": "/images/barcelona/b3.jpg", "description": "", "link": ""},
-            {"id": 1044, "name": "", "photo": "/images/barcelona/b4.jpg", "description": "", "link": ""},
-            {"id": 1045, "name": "", "photo": "/images/barcelona/b5.jpg", "description": "", "link": ""},
-            {"id": 1046, "name": "", "photo": "/images/barcelona/b6.jpg", "description": "", "link": ""}
+            {
+                "id": 1041,
+                "name": "Саграда Фамилия",
+                "photo": "https://wikiway.com/upload/hl-photo/5d4/43c/khram-svyatogo-semeystva_183.jpg",
+                "description": "Саграда Фамилия – поразительный по красоте храм Барселоны, являющийся главным творением Антонио Гауди. Башни собора Святого Семейства хорошо видны издалека: они возвышаются над множеством домов города. Знаменитый архитектор посвятил созданию фантастических интерьеров и фасадов храма не одно десятилетие, однако его строительство до сих пор не закончено.",
+                "link": "https://wikiway.com/spain/barselona/sagrada-familiya/map/"
+            },
+            {
+                "id": 1042,
+                "name": "Парк Гуэль",
+                "photo": "https://wikiway.com/upload/hl-photo/63a/6c5/park-guel_140.jpg",
+                "description": "Парк Гуэль — известный парк в Барселоне названный в честь своего первого владельца Эусеби Гуэля. Сказочные, будто пряничные, домики, удивительный зал с колоннами, причудливые аллеи, извилистые скамейки и волшебная мозаика – это все собрано здесь, в одном из районов Барселоны. Гулять по парку стоит с фотоаппаратом! Вам обязательно захочется запечатлеть это замечательное место.",
+                "link": "https://wikiway.com/spain/barselona/park-guel/map/"
+            },
+            {
+                "id": 1043,
+                "name": "Гора Тибидабо",
+                "photo": "https://wikiway.com/upload/iblock/622/8_khram-ss-r.jpg",
+                "description": "Гора Тибидабо — наиболее высокая точка испанского города Барселоны, относится к хребту Кольсерола. С этого холма открывается прекрасная панорама столицы Каталонии, насладиться которой приезжают не только иностранные туристы, но и сами испанцы. Гора относительно невысокая – чуть больше 500 метров над уровнем моря, однако и ее, и расположенные на вершине достопримечательности видно из любой точки города.",
+                "link": "https://wikiway.com/spain/barselona/tibidabo/map/"
+            },
+            {
+                "id": 1044,
+                "name": "Испанская деревня",
+                "photo": "https://wikiway.com/upload/hl-photo/97d/fd0/ispanskaya-derevnya_89.jpg",
+                "description": "Испанская деревня – архитектурный музей в Барселоне. В деревне установлено 117 копий исторических памятников. Часть из них выполнена в натуральную величину, остальные построены в уменьшенном виде. Живописный комплекс был сооружен в 1929 году к Международной выставке и оказался таким популярным, что Испанскую деревню решено было сохранить в виде музея под открытым небом.",
+                "link": "https://wikiway.com/spain/barselona/ispanskaya-derevnya/map/"
+            },
+            {
+                "id": 1045,
+                "name": "Дом Мила",
+                "photo": "https://wikiway.com/upload/iblock/f1d/vnutrenniy-dvor-kasa_mila.jpg",
+                "description": "Дом Мила – одно из ярких творений Антонио Гауди в Барселоне. Достопримечательность, расположенная на пересечении бульвара Пассеч-де-Грасия с улицей Каррер-де-Провенса, привлекает внимание плавными изгибами, подражанием морской стихии, хрупким балансом между легкостью и громоздкостью. Барселону можно назвать творческой платформой знаменитого архитектора.",
+                "link": "https://wikiway.com/spain/barselona/dom-mila/map/"
+            },
+            {
+                "id": 1046,
+                "name": "Район Эшампле",
+                "photo": "https://wikiway.com/upload/hl-photo/d20/730/rayon-eshample_33.jpg",
+                "description": "Эшампле — пожалуй самый известный район Барселоны, возник в конце XIX века, когда Барселона стала расширяться на запад от Готического квартала. Здесь расположены магазины, художественные галереи и рестораны, поражающие своей архитектурой.",
+                "link": "https://wikiway.com/spain/barselona/rayon-eshample/map/"
+            }
         ],
         "hotels": "https://travel.yandex.ru/hotels/barcelona-es/",
         "flights": "https://travel.yandex.ru/flights/cities/barcelona-es/"

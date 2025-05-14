@@ -51,14 +51,17 @@ router.get('/:id', (req, res) => {
   res.json(travel);
 });
 
-// Получить туры пользователя по userId
+// Получить путешествия пользователя
 router.get('/user/:userId', (req, res) => {
   const userId = parseInt(req.params.userId, 10);
   const users = readUsers();
-
   const user = users.find(u => u.id === userId);
-  if (!user || !user.tours || user.tours.length === 0) {
-    console.log('Нет туров для пользователя:', userId);
+
+  if (!user) {
+    return res.status(404).json({ error: 'Пользователь не найден' });
+  }
+
+  if (!user.tours || !Array.isArray(user.tours)) {
     return res.json([]);
   }
 
@@ -73,13 +76,12 @@ router.get('/user/:userId', (req, res) => {
     return res.status(500).json({ error: 'Не удалось прочитать данные туров' });
   }
 
-  // Получаем полные данные туров из popular-tours.json
-  const userTours = user.tours.map(tourId => 
-    popularTours.find(t => t.id === tourId)
-  ).filter(tour => tour !== undefined);
+  // Получаем полную информацию о турах пользователя
+  const userTravels = user.tours
+    .map(tourId => popularTours.find(t => t.id === tourId))
+    .filter(tour => tour !== undefined);
 
-  console.log('Туры пользователя:', userTours);
-  res.json(userTours);
+  res.json(userTravels);
 });
 
 // Создать новую поездку

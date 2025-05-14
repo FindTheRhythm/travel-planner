@@ -59,4 +59,38 @@ router.post('/login', (req, res) => {
   res.json({ id: user.id, username: user.username, email: user.email });
 });
 
+// Удаление аккаунта
+router.delete('/delete-account/:userId', (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const users = readUsers();
+    
+    // Находим пользователя
+    const userIndex = users.findIndex(u => u.id === userId);
+    if (userIndex === -1) {
+      return res.status(404).json({ error: 'Пользователь не найден' });
+    }
+
+    // Удаляем аватар пользователя, если он есть
+    const user = users[userIndex];
+    if (user.avatar) {
+      const avatarPath = path.join(__dirname, '../uploads/avatars', user.avatar);
+      if (fs.existsSync(avatarPath)) {
+        fs.unlinkSync(avatarPath);
+      }
+    }
+
+    // Удаляем пользователя из массива
+    users.splice(userIndex, 1);
+    
+    // Сохраняем обновленный список пользователей
+    writeUsers(users);
+
+    res.json({ message: 'Аккаунт успешно удален' });
+  } catch (error) {
+    console.error('Error deleting account:', error);
+    res.status(500).json({ error: 'Ошибка при удалении аккаунта' });
+  }
+});
+
 module.exports = router;

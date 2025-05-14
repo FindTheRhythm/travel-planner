@@ -17,14 +17,14 @@
     "id": 103, 
     "title": "Москва, Россия", 
     "description": "Золотая осень в столице России",
-    "image": "/images/moscow/moscow1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/b80/385/krasnaya_ploshad_128.jpg",
     "tags": ["Культура", "История", "Городской отдых", "Парки", "Музеи", "Архитектура"]
   },
   { 
     "id": 104, 
     "title": "Барселона, Испания", 
     "description": "Пляжный отдых и архитектура Гауди летом",
-    "image": "/images/barcelona/barcelona1.jpg",
+    "image": "https://wikiway.com/upload/iblock/8cd/3-dom-casa-mila.jpg",
     "tags": ["Пляж", "Архитектура", "Искусство", "Море", "Гастрономия", "Развлечения"]
   },
   { 
@@ -160,13 +160,19 @@
     "image": "/images/sydney/sydney1.jpg",
     "tags": ["Праздники", "Городской отдых", "Пляж", "Опера", "Мосты", "Природа"]
   },
-
   { 
     "id": 124, 
     "title": "Стокгольм, Швеция", 
     "description": "Традиции середины лета и белые ночи",
     "image": "/images/stockholm/stockholm1.jpg",
     "tags": ["Природа", "Традиции", "Культура", "Дизайн", "Острова", "Музеи"]
+  },
+  {
+    "id": 125, 
+    "title": "Несуществующий город", 
+    "description": "Ложное описание",
+    "image": "/images/notfound.jpg",
+    "tags": ["Это", "Ложное", "теги"]
   }
 
 ]

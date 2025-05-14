@@ -1,15 +1,14 @@
-
 {
     "name": "travel-planner-backend",
     "version": "1.0.0",
     "description": "Backend for Travel Planner app",
     "main": "server.js",
     "scripts": {
-      "start": "node server.js"
+        "start": "node server.js"
     },
     "dependencies": {
-      "express": "^4.18.0",
-      "cors": "^2.8.5"
+        "cors": "^2.8.5",
+        "express": "^4.18.0",
+        "multer": "^1.4.5-lts.2"
     }
-  }
-  
+}

@@ -1,0 +1,106 @@
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const router = express.Router();
+const multer = require('multer');
+
+const USERS_FILE = path.join(__dirname, '../data/users.json');
+
+// Настройка multer для загрузки файлов
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadDir = path.join(__dirname, '../uploads/avatars');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
+// Читать/записывать пользователей из JSON
+function readUsers() {
+  try {
+    const data = fs.readFileSync(USERS_FILE, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    return [];
+  }
+}
+
+function writeUsers(users) {
+  fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
+}
+
+// Обновить профиль пользователя
+router.post('/updateProfile', (req, res) => {
+  const { userId, username, email, currentPassword, newPassword } = req.body;
+
+  const users = readUsers();
+  const userIndex = users.findIndex(u => u.id === userId);
+
+  if (userIndex === -1) {
+    return res.status(404).json({ error: 'Пользователь не найден' });
+  }
+
+  // Проверяем, не занят ли email другим пользователем
+  const emailExists = users.some(u => u.email === email && u.id !== userId);
+  if (emailExists) {
+    return res.status(400).json({ error: 'Email уже используется' });
+  }
+
+  // Обновляем данные пользователя
+  users[userIndex] = {
+    ...users[userIndex],
+    username,
+    email,
+    ...(newPassword && { password: newPassword })
+  };
+
+  writeUsers(users);
+
+  res.json({
+    id: users[userIndex].id,
+    username: users[userIndex].username,
+    email: users[userIndex].email,
+    avatar: users[userIndex].avatar
+  });
+});
+
+// Обновить аватар пользователя
+router.post('/updateAvatar', upload.single('avatar'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'Файл не загружен' });
+  }
+
+  const userId = parseInt(req.body.userId, 10);
+  const users = readUsers();
+  const userIndex = users.findIndex(u => u.id === userId);
+
+  if (userIndex === -1) {
+    return res.status(404).json({ error: 'Пользователь не найден' });
+  }
+
+  // Удаляем старый аватар, если он существует
+  if (users[userIndex].avatar) {
+    const oldAvatarPath = path.join(__dirname, '../uploads/avatars', users[userIndex].avatar);
+    if (fs.existsSync(oldAvatarPath)) {
+      fs.unlinkSync(oldAvatarPath);
+    }
+  }
+
+  // Обновляем путь к аватару
+  users[userIndex].avatar = req.file.filename;
+  writeUsers(users);
+
+  res.json({
+    avatar: req.file.filename
+  });
+});
+
+module.exports = router; 

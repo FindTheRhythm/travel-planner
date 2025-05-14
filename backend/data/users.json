@@ -12,12 +12,18 @@
     "password": "123456"
   },
   {
-    "id": 3,
-    "username": "danila",
+    "id": 4,
+    "username": "123",
+    "email": "213",
+    "password": "123"
+  },
+  {
+    "id": 5,
+    "username": "danils",
     "email": "dshurik618@gmail.com",
-    "password": "qwerty618",
+    "password": "йцукен618",
     "tours": [
-      101
+      104
     ]
   }
 ]
