@@ -14,6 +14,8 @@ import Footer from './components/Footer';
 import { Box, CircularProgress } from '@mui/material';
 import ProtectedRoute from './components/ProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
+import PageTransition from './components/PageTransition';
+import { AnimatePresence } from 'framer-motion';
 
 interface User {
   id: number;
@@ -65,48 +67,51 @@ function App() {
         flexDirection: 'column',
         minHeight: '100vh',
         margin: 0,
-        padding: 0,
-        overflow: 'hidden'
+        padding: 0
       }}>
         <NavBar user={user} onLogout={handleLogout} />
         <Box sx={{ 
           flexGrow: 1,
-          mt: '64px', // отступ под навбаром
+          mt: '64px',
           display: 'flex',
           flexDirection: 'column',
           width: '100%',
-          overflow: 'auto'
+          position: 'relative'
         }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login setUser={setUser} />} />
-            <Route path="/register" element={<Register />} />
-            <Route 
-              path="/profile" 
-              element={
-                isLoading ? (
-                  <Box sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'center', 
-                    alignItems: 'center',
-                    minHeight: '60vh' 
-                  }}>
-                    <CircularProgress />
-                  </Box>
-                ) : localStorage.getItem('user') ? (
-                  <Profile user={JSON.parse(localStorage.getItem('user')!)} onUpdateUser={handleUpdateUser} />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              } 
-            />
-            <Route path="/travels" element={<Navigate to="/profile" />} />
-            <Route path="/travels/explore" element={<TourExplorer />} />
-            <Route path="/travels/:id" element={<TravelDetails />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/404" element={<NotFound />} />
-            <Route path="*" element={<Navigate to="/404" />} />
-          </Routes>
+          <AnimatePresence mode="wait">
+            <PageTransition>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login setUser={setUser} />} />
+                <Route path="/register" element={<Register />} />
+                <Route 
+                  path="/profile" 
+                  element={
+                    isLoading ? (
+                      <Box sx={{ 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        alignItems: 'center',
+                        minHeight: '60vh' 
+                      }}>
+                        <CircularProgress />
+                      </Box>
+                    ) : localStorage.getItem('user') ? (
+                      <Profile user={JSON.parse(localStorage.getItem('user')!)} onUpdateUser={handleUpdateUser} />
+                    ) : (
+                      <Navigate to="/login" />
+                    )
+                  } 
+                />
+                <Route path="/travels" element={<Navigate to="/profile" />} />
+                <Route path="/travels/explore" element={<TourExplorer />} />
+                <Route path="/travels/:id" element={<TravelDetails />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/404" element={<NotFound />} />
+                <Route path="*" element={<Navigate to="/404" />} />
+              </Routes>
+            </PageTransition>
+          </AnimatePresence>
         </Box>
         <Footer />
       </Box>

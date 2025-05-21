@@ -155,27 +155,26 @@
         "id": 105,
         "name": "Venice, Italy",
         "images": [
-            {"photo":"/images/venice/venice1.jpg", "autor":""},
-            {"photo":"/images/venice/venice2.jpg", "autor":""},
-            {"photo":"/images/venice/venice3.jpg", "autor":""},
-            {"photo":"/images/venice/venice4.jpg", "autor":""},
-            {"photo":"/images/venice/venice5.jpg", "autor":""},
-            {"photo":"/images/venice/venice6.jpg", "autor":""},
-            {"photo":"/images/venice/venice7.jpg", "autor":""},
-            {"photo":"/images/venice/venice8.jpg", "autor":""},
-            {"photo":"/images/venice/venice9.jpg", "autor":""},
-            {"photo":"/images/venice/venice10.jpg", "autor":""}
+            {"photo":"https://wikiway.com/upload/hl-photo/8fe/d6e/venetsiya_1.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/hl-photo/3f8/eff/venetsiya_2.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/hl-photo/fbd/231/venetsiya_3.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/hl-photo/a27/6c8/venetsiya_4.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/hl-photo/2eb/aa0/venetsiya_9.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/42f/kanal-most.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/9e6/4.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/693/vid-sverkhu.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/9cb/9_.jpg", "autor":""}
         ],
-        "firstDescription": "",
-        "secondDescription": "",
-        "thirdDescription": "",
+        "firstDescription": "Город, построенный на 118 островах, — уникальное явление, которое ежегодно стремятся увидеть миллионы туристов со всего мира. Общественным транспортом в Венеции служат не автобусы и такси, а лодки, паромы и катера. И уже только это создаёт романтическое настроение.",
+        "secondDescription": "Через каналы с бирюзовой водой перекинуты мосты, утопающие в цветах, а из каждого кафе доносится запах пиццы и кофе. Особой популярностью пользуются мост Влюблённых и мост Риальто — старейший в городе.",
+        "thirdDescription": "Главная туристическая точка на карте Венеции — площадь Сан-Марко с одноимённым собором, который поражает великолепием внутренних интерьеров. Здесь хранятся мощи евангелиста Марка. Вокруг — десятки ресторанов с видом (и довольно высоким ценником).",
         "places": [
-            {"id": 1051, "name": "", "photo": "/images/venice/v1.jpg", "description": "", "link": ""},
-            {"id": 1052, "name": "", "photo": "/images/venice/v2.jpg", "description": "", "link": ""},
-            {"id": 1053, "name": "", "photo": "/images/venice/v3.jpg", "description": "", "link": ""},
-            {"id": 1054, "name": "", "photo": "/images/venice/v4.jpg", "description": "", "link": ""},
-            {"id": 1055, "name": "", "photo": "/images/venice/v5.jpg", "description": "", "link": ""},
-            {"id": 1056, "name": "", "photo": "/images/venice/v6.jpg", "description": "", "link": ""}
+            {"id": 1051, "name": "Дворец дожей", "photo": "https://wikiway.com/upload/hl-photo/123/055/dvorets-dozhey_150.jpg", "description": "Дворец дожей или Палаццо Дукале расположен на материковой части Италии, в городе Венеция, на площади Святого Марка. Богатые внутренняя и внешняя отделка, обширная коллекция предметов старины, а также многовековая история сделали это удивительное сооружение одним из самых популярных и посещаемых музеев в городе на воде.", "link": "https://wikiway.com/italia/venetsiya/dvorets-dozhey/map/"},
+            {"id": 1052, "name": "Мост Риальто", "photo": "https://wikiway.com/upload/hl-photo/d4a/ponte_rialto_53.jpg", "description": "Мост Риальто (Ponte di Rialto) – один из самых известных мостов Венеции; место, где начинается и заканчивается большинство экскурсионных маршрутов по главным достопримечательностям. Итальянский город располагается на 117 островах, соединенных между собой более чем полусотней каналов.", "link": "https://wikiway.com/italia/venetsiya/most-rialto/map/"},
+            {"id": 1053, "name": "Собор Святого Марка", "photo": "https://wikiway.com/upload/hl-photo/a5a/bazilika_san_marco_73.jpg", "description": "Собор Святого Марка (Basilica di San Marco) относится к самым известным храмам Венеции – уникального города в Италии, расположенного на 118 островах. Если вы хотите увидеть частичку древней Византии в современной Европе, то лучшего объекта не найти. Базилика Сан-Марко представляет собой классический образец византийской архитектуры не только на Старом континенте, но и во всём мире.", "link": "https://wikiway.com/italia/venetsiya/sobor-svyatogo-marka/map/"},
+            {"id": 1054, "name": "Собор Санта-Мария-делла-Салюте", "photo": "https://wikiway.com/upload/hl-photo/9e2/santa_maria_della_salute_85.jpg", "description": "Санта-Мария-делла-Салюте (Basilica di Santa Maria della Salute) – венецианский собор XVII века, возведенный в знак благодарности Деве Марии за избавление города от чумы, которая унесла жизни трети горожан. В память о чудесном спасении храм получил свое название – «Святая Мария Здоровья».", "link": "https://wikiway.com/italia/venetsiya/santa-mariya-della-salyute/map/"},
+            {"id": 1055, "name": "Мост Вздохов в Венеции", "photo": "https://wikiway.com/upload/hl-photo2/b87/most_vzdohov_v_venetsii_69.jpg", "description": "Мост Вздохов в Венеции (Ponte dei Sospiri) – небольшое арочное сооружение в стиле барокко, соединяющее Дворец дожей и тюрьму. Выполненный из белого известняка в сочетании со светлым мрамором, мост украшен мелкими деталями и резьбой, отличаясь каменными ажурными решетками на окнах.", "link": "https://wikiway.com/italia/venetsiya/most-vzdokhov-v-venetsii/map/"},
+            {"id": 1056, "name": "Галерея Академии в Венеции", "photo": "https://wikiway.com/upload/hl-photo/836/galereya_akademii_29.jpg", "description": "Галерея или Музей Академии — крупнейший художественный музей Венеции, в котором хранится самая большая коллекция картин художников венецианской школы живописи, творивших в XIV-XVIII веках. Здание музея находится на южном берегу Гранд-канала, и его посещение стремится включить в свою культурную программу большинство туристов, приезжающих в город на воде.", "link": "https://wikiway.com/italia/venetsiya/galereya-akademii/map/"}
         ],
         "hotels": "https://travel.yandex.ru/hotels/venice-it/",
         "flights": "https://travel.yandex.ru/flights/cities/venice-it/"
@@ -184,27 +183,27 @@
         "id": 106,
         "name": "London, United Kingdom",
         "images": [
-            {"photo":"/images/london/london1.jpg", "autor":""},
-            {"photo":"/images/london/london2.jpg", "autor":""},
-            {"photo":"/images/london/london3.jpg", "autor":""},
-            {"photo":"/images/london/london4.jpg", "autor":""},
-            {"photo":"/images/london/london5.jpg", "autor":""},
-            {"photo":"/images/london/london6.jpg", "autor":""},
-            {"photo":"/images/london/london7.jpg", "autor":""},
-            {"photo":"/images/london/london8.jpg", "autor":""},
-            {"photo":"/images/london/london9.jpg", "autor":""},
-            {"photo":"/images/london/london10.jpg", "autor":""}
+            {"photo":"https://wikiway.com/upload/iblock/c3b/Vid-na-Vestminsterskiy-dvorets-i-Big_Ben.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/2b3/Ulitsy-Londona-1.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/615/Ulitsy-Londona-4.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/697/Ulitsy-Londona-6.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/9be/Ulitsy-Londona-9.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/85e/Vestminsterskoe-Abbatstvo-zalozhennoe-Eduardom-Ispovednikom-v-1065-g..jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/hl-photo/b3a/d8d/london_2.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/hl-photo/deb/844/london_5.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/hl-photo/753/bfb/london_7.jpg", "autor":""},
+            {"photo":"https://wikiway.com/upload/iblock/a59/Meriya-Londona.jpg", "autor":""}
         ],
-        "firstDescription": "",
-        "secondDescription": "",
-        "thirdDescription": "",
+        "firstDescription": "Вечный соперник Парижа Лондон отличается поистине британским характером. Он выдержанный, строгий и невероятно элегантный.",
+        "secondDescription": "Главный символ — легендарный Биг-Бен — часы на Башне Елизаветы. Это они красуются на учебниках и упаковках английского чая. Недавно завершилась их пятилетняя реставрация, и сегодня Биг-Бен снова радует глаза туристов. Обязательно оцените размах Вестминстерского дворца и прогуляйтесь рядом с Букингемским — по прилегающему к нему парку.",
+        "thirdDescription": "Одно из старейших сооружений города — Тауэр, рядом с которым — одноимённый мост с интересным музеем внутри. Если решите полюбоваться на британскую столицу с высоты, прокатитесь на колесе обозрения London Eye. Эта конструкция, наравне с сияющими небоскрёбами, тоже считается украшением Лондона — только современным.",
         "places": [
-            {"id": 1061, "name": "", "photo": "/images/london/l1.jpg", "description": "", "link": ""},
-            {"id": 1062, "name": "", "photo": "/images/london/l2.jpg", "description": "", "link": ""},
-            {"id": 1063, "name": "", "photo": "/images/london/l3.jpg", "description": "", "link": ""},
-            {"id": 1064, "name": "", "photo": "/images/london/l4.jpg", "description": "", "link": ""},
-            {"id": 1065, "name": "", "photo": "/images/london/l5.jpg", "description": "", "link": ""},
-            {"id": 1066, "name": "", "photo": "/images/london/l6.jpg", "description": "", "link": ""}
+            {"id": 1061, "name": "Биг-Бен", "photo": "https://wikiway.com/upload/hl-photo/f18/627/big-ben_73.jpg", "description": "Биг-Бен относится к числу самых популярных достопримечательностей столицы Великобритании и является одной из визитных карточек Лондона. Именно под этим названием во всем мире знают одну из трех башен Вестминстерского дворца – резиденции парламента Соединенного Королевства, расположенной на берегу Темзы.", "link": "https://wikiway.com/velikobritaniya/london/big-ben/map/"},
+            {"id": 1062, "name": "Букингемский дворец", "photo": "https://wikiway.com/upload/hl-photo/3be/653/bukingemskiy-dvorets_121.jpg", "description": "Букингемский дворец – резиденция британских монархов в Лондоне. Сегодня там живет и работает Елизавета II. Во дворце кипит жизнь: проходят приемы и мероприятия государственного значения. Покой королевской семьи охраняют гвардейцы – их ярко-красные наряды видны издалека.", "link": "https://wikiway.com/velikobritaniya/london/bukingemskiy-dvorets/map/"},
+            {"id": 1063, "name": "Тауэрский мост", "photo": "https://wikiway.com/upload/hl-photo/8fe/c78/tauerskiy-most_81.jpg", "description": "Тауэрский мост – разводная переправа через реку Темзу в центре Лондона, неподалеку от Тауэрской башни. Это одна из наиболее популярных достопримечательностей Лондона, которую легко узнают даже те, кто никогда не бывал в столице Соединенного Королевства. Ежегодно сюда стекаются тысячи туристов, открывающие для себя великолепие этого готического сооружения.", "link": "https://wikiway.com/velikobritaniya/london/tauerskiy-most/map/"},
+            {"id": 1064, "name": "Вестминстерское Аббатство", "photo": "https://wikiway.com/upload/hl-photo/8dd/992/vestminsterskoe-abbatstvo_74.jpg", "description": "Вестминстерское Аббатство — не только самая большая церковь в Лондоне, но и средоточие государственной жизни страны, Здесь были коронованы 38 монархов, начиная с Вильгельма Завоевателя, ставшего английским королем в день Рождества 1666 г., т.е. все монархи, кроме Эдуарда V, убитого в 1483 г., и Эдуарда VIII, отрекшегося от престола в 1936 г.", "link": "https://wikiway.com/velikobritaniya/london/vestminsterskoe-abbatstvo/map/"},
+            {"id": 1065, "name": "Сохо", "photo": "https://wikiway.com/upload/hl-photo/64a/1bd/sokho_91.jpg", "description": "Сохо – квартал в центральной части лондонского Вест-Энда, известный своими многочисленными магазинами и увеселительными заведениями. Северная сторона Сохо примыкает к Оксфорд-стрит, а южная соседствует с площадью Пикадилли. Район граничит с Риджент-стрит на западе и с Чаринг-Кросс-Роуд на востоке.", "link": "https://wikiway.com/velikobritaniya/london/sokho/map/"},
+            {"id": 1066, "name": "Колесо обозрения - Лондонский глаз", "photo": "https://wikiway.com/upload/hl-photo/f02/51a/koleso-obozreniya-londonskiy-glaz_42.jpg", "description": "«Лондонский глаз» — поэтическое название грандиозного колеса обозрения, установленного на берегу Темзы. Поднимаясь на высоту 45-этажного дома (135 метров), посетители могут осмотреть Лондон и его окрестности на расстоянии до 40 километров при ясной погоде.", "link": "https://wikiway.com/velikobritaniya/london/koleso-obozreniya-londonskiy-glaz/map/"}
         ],
         "hotels": "https://travel.yandex.ru/hotels/london-gb/",
         "flights": "https://travel.yandex.ru/flights/cities/london-gb/"
@@ -224,9 +223,9 @@
             {"photo":"/images/istanbul/istanbul9.jpg", "autor":""},
             {"photo":"/images/istanbul/istanbul10.jpg", "autor":""}
         ],
-        "firstDescription": "",
-        "secondDescription": "",
-        "thirdDescription": "",
+        "firstDescription": "Стамбул — один из самых красивых (и посещаемых) городов Турции, где туристы в первую очередь идут смотреть Голубую мечеть и собор святой Софии.",
+        "secondDescription": "Увидеть город с его бухтами и вантовыми мостами можно с башни Галата или с территории величественной мечети Сулеймание, где особенно красиво на закате. Производит впечатление и Гранд-базар, пропахший специями и благовониями.",
+        "thirdDescription": "Осмотреть все достопримечательности Стамбула за поездку будет непросто — по примерной оценке экспертов, здесь более 500 объектов, заслуживающих внимания путешественников. К счастью для нас, в этот город из Москвы и других городов России есть прямые рейсы, поэтому добраться сюда не так уж сложно.",
         "places": [
             {"id": 1071, "name": "", "photo": "/images/istanbul/i1.jpg", "description": "", "link": ""},
             {"id": 1072, "name": "", "photo": "/images/istanbul/i2.jpg", "description": "", "link": ""},
@@ -253,9 +252,9 @@
             {"photo":"/images/kyoto/kyoto9.jpg", "autor":""},
             {"photo":"/images/kyoto/kyoto10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Древняя столица Японии привлекает туристов аутентичной архитектурой и атмосферой старины — на улицах Киото до сих пор можно встретить гейш в традиционных одеждах.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Сложно не оценить по достоинству храмовый комплекс Фусими Инари или золотую пагоду Кинкаку-дзи. Бывалые путешественники рекомендуют приезжать в Киото весной, в конце марта и в начале апреля. В это время здесь цветёт сакура, которая превращает просто красивые пейзажи в абсолютно сказочные.",
         "places": [
             {"id": 1081, "name": "", "photo": "/images/kyoto/k1.jpg", "description": "", "link": ""},
             {"id": 1082, "name": "", "photo": "/images/kyoto/k2.jpg", "description": "", "link": ""},
@@ -282,9 +281,9 @@
             {"photo":"/images/saint-petersburg/saint-petersburg9.jpg", "autor":""},
             {"photo":"/images/saint-petersburg/saint-petersburg10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Культурная столица России регулярно отмечается туристами из разных стран как один из самых красивых городов мира. И Санкт-Петербургу с его мостами, каналами и великолепными дворцами действительно есть чем удивить даже самых взыскательных путешественников.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "В просторных залах Эрмитажа можно запросто провести целый день, а цветные купола Спаса на Крови хочется сфотографировать ещё и ещё раз. Если вы приехали в Петербург летом, обязательно найдите время для посещения Петергофа с его фантастическими фонтанами и ухоженным парком. К тому же в это время здесь как раз белые ночи, которые придают городу на Неве особое очарование.",
         "places": [
             {"id": 1091, "name": "", "photo": "/images/saint-petersburg/sp1.jpg", "description": "", "link": ""},
             {"id": 1092, "name": "", "photo": "/images/saint-petersburg/sp2.jpg", "description": "", "link": ""},
@@ -311,9 +310,9 @@
             {"photo":"/images/new-york/new-york9.jpg", "autor":""},
             {"photo":"/images/new-york/new-york10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Красота Нью-Йорка специфическая, ведь этот город построен из стекла и бетона.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Здесь нет древностей, но есть неповторимый шарм: неоновые рекламные вывески на Таймс-сквер, причудливое здание Эмпайр Стейт Билдинг, статуя Свободы, знакомая даже тем, кто никогда не бывал в США. А ещё, конечно, сотни мест, с детства знакомых по голливудским фильмам: от Центрального парка до Бруклинского моста. Нью-Йорк — город с фантастической энергетикой. Он никогда не спит и всё время готов удивлять тех, кто доберётся сюда, перемахнув через океан.",
         "places": [
             {"id": 1101, "name": "", "photo": "/images/new-york/ny1.jpg", "description": "", "link": ""},
             {"id": 1102, "name": "", "photo": "/images/new-york/ny2.jpg", "description": "", "link": ""},
@@ -340,9 +339,9 @@
             {"photo":"/images/prague/prague9.jpg", "autor":""},
             {"photo":"/images/prague/prague10.jpg", "autor":""}
         ],
-        "firstDescription": "",
-        "secondDescription": "",
-        "thirdDescription": "",
+        "firstDescription": "Столица Чехии — место древнее и мистическое, с особой атмосферой, которая одним кажется загадочной, а другим даже немного гнетущей.",
+        "secondDescription": "Над городом возвышается самый большой в стране замок — Пражский град, на территории которого расположился собор святого Вита. Настоящее произведение средневекового зодчества — Карлов мост, обязательное место прогулок туристов и местных жителей. Здесь можно послушать уличных музыкантов и понаблюдать за лебедями в реке ​​Влтаве. Отсюда же открывается красивая панорама старого города. Его сердце — ​​Староместская площадь с ратушей, которую украшают причудливые астрономические часы. На площади постоянно устраивают ярмарки и народные гуляния, поэтому здесь почти всегда много людей.",
+        "thirdDescription": "Из сравнительно новых достопримечательностей — необычный Танцующий дом, уникальный своим причудливым дизайном.",
         "places": [
             {"id": 1111, "name": "", "photo": "/images/prague/p1.jpg", "description": "", "link": ""},
             {"id": 1112, "name": "", "photo": "/images/prague/p2.jpg", "description": "", "link": ""},
@@ -369,9 +368,9 @@
             {"photo":"/images/singapore/singapore9.jpg", "autor":""},
             {"photo":"/images/singapore/singapore10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Этот город-государство — один из самых высокотехнологичных в мире. Он очень чистый, современный и комфортный для жизни. И здесь, разумеется, есть чему удивиться.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "В футуристичных Садах у залива «растут» необычные гигантские деревья, между которыми можно прогуляться по мостам. С крыши фешенебельного отеля Marina Bay Sands открывается фантастический вид, а старинный китайский квартал хранит аутентичную атмосферу. Даже сингапурский аэропорт Чанги можно смело назвать городской достопримечательностью — здесь много зелени и креативные арт-объекты.",
         "places": [
             {"id": 1121, "name": "", "photo": "/images/singapore/s1.jpg", "description": "", "link": ""},
             {"id": 1122, "name": "", "photo": "/images/singapore/s2.jpg", "description": "", "link": ""},
@@ -398,9 +397,9 @@
             {"photo":"/images/amsterdam/amsterdam9.jpg", "autor":""},
             {"photo":"/images/amsterdam/amsterdam10.jpg", "autor":""}
         ],
-        "firstDescription": "",
-        "secondDescription": "",
-        "thirdDescription": "",
+        "firstDescription": "В Нидерландах много красивых городов — уютный Утрехт, цветущий Гарлем, сдержанная Гаага. Но Амстердам с его каналами и мостами определённо лидирует у туристов. ",
+        "secondDescription": "Это очень эклектичный город, где ночная жизнь с громкими вечеринками соседствует с богатым культурным наследием, а старинные здания с кирпичными фасадами щедро разбавлены необычными произведениями современных архитекторов.",
+        "thirdDescription": "Самые эффектные кадры Амстердама можно сделать с воды, поэтому не упустите шанс отправиться на лодочную прогулку по каналам. Выпейте кофе на площади Дам и посетите готическую церковь Аудекерк. Побывайте в музее киноискусства Eye и уделите время Рейксмузеуму с его коллекцией картин, которая считается одной из лучших в мире.",
         "places": [
             {"id": 1131, "name": "", "photo": "/images/amsterdam/a1.jpg", "description": "", "link": ""},
             {"id": 1132, "name": "", "photo": "/images/amsterdam/a2.jpg", "description": "", "link": ""},
@@ -427,9 +426,9 @@
             {"photo":"/images/bruges/bruges9.jpg", "autor":""},
             {"photo":"/images/bruges/bruges10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Бельгийский город подходит вовсе не только для того, чтобы залечь на дно. Здесь можно очень весело и интересно провести время, наслаждаясь прекрасной архитектурой.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Брюгге как будто сошёл со страниц книги сказок про прекрасных принцесс и могущественных волшебников — любая фотография, сделанная на его улицах, моментально превращается в открытку. Главная достопримечательность — рыночная площадь с башней Белфорд, куда обязательно нужно подняться, чтобы внимательно рассмотреть пряничные домики. Как и в случае с Амстердамом, по каналам Брюгге можно прокатиться, например на лодке или каяке. Красивые виды гарантированы.",
         "places": [
             {"id": 1141, "name": "", "photo": "/images/bruges/b1.jpg", "description": "", "link": ""},
             {"id": 1142, "name": "", "photo": "/images/bruges/b2.jpg", "description": "", "link": ""},
@@ -456,9 +455,9 @@
             {"photo":"/images/colmar/colmar9.jpg", "autor":""},
             {"photo":"/images/colmar/colmar10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Этот старинный французский городок находится на границе с Германией. Фахверковые домики очень фотогенично смотрятся на берегах узких каналов. Многие строения украшены рисунками и скульптурами. Старый город остаётся нетронутым вот уже несколько веков, поэтому напоминает «тематический парк» с настоящими историческими памятниками, без бутафории.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Особенно хорош Кольмар перед Рождеством, когда на площадях открываются ярмарки, а улицы начинают сверкать сотнями разноцветных огоньков. Денег на праздничную иллюминацию в Кольмаре не жалеют, поэтому этот город вполне может претендовать на титул новогодней столицы.",
         "places": [
             {"id": 1151, "name": "", "photo": "/images/colmar/c1.jpg", "description": "", "link": ""},
             {"id": 1152, "name": "", "photo": "/images/colmar/c2.jpg", "description": "", "link": ""},
@@ -485,9 +484,9 @@
             {"photo":"/images/vienna/vienna9.jpg", "autor":""},
             {"photo":"/images/vienna/vienna10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Величественная, музыкальная, чопорная — столица Австрии радует туристов красотой своих дворцов, музеев и соборов.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Выйдя из метро на Штефанплац, можно долго стоять, подняв голову, и изучать резной шпиль собора святого Стефана. А потом отправиться в Хофбург, к потрясающему императорскому дворцу — это сооружение производит впечатление как снаружи, так и внутри. Настоящая сокровищница расположилась в Музейном квартале, которому запросто можно посвятить целый день. И, конечно, не оставляйте без внимания красавицу-ратушу, рядом с которой и летом, и зимой кипит жизнь. Концерты и гастрономические специалитеты — всё здесь.",
         "places": [
             {"id": 1161, "name": "", "photo": "/images/vienna/v1.jpg", "description": "", "link": ""},
             {"id": 1162, "name": "", "photo": "/images/vienna/v2.jpg", "description": "", "link": ""},
@@ -514,9 +513,9 @@
             {"photo":"/images/edinburgh/edinburgh9.jpg", "autor":""},
             {"photo":"/images/edinburgh/edinburgh10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Столица Шотландии не оставит равнодушными любителей средневековья.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Прогуляйтесь по Королевской миле — главной городской улице — до монументального Эдинбургского замка. По дороге обратите внимание на собор Святого Джайлса — главный центр пресвитерианства. Отдохнуть и полюбоваться цветами можно в городском парке, а сделать красочные фотографии — на улице Виктория с её цветными домиками. Поговаривают, что именно это место стало прототипом Косого переулка из «Гарри Поттера». Здесь, кстати, есть магазин для фанатов Мальчика, который выжил.",
         "places": [
             {"id": 1171, "name": "", "photo": "/images/edinburgh/e1.jpg", "description": "", "link": ""},
             {"id": 1172, "name": "", "photo": "/images/edinburgh/e2.jpg", "description": "", "link": ""},
@@ -543,9 +542,9 @@
             {"photo":"/images/budapest/budapest9.jpg", "autor":""},
             {"photo":"/images/budapest/budapest10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Будапешт — это мосты, дворцы и термальные купальни, многие из которых расположились в фантастически красивых зданиях (взять хотя бы Геллерт или Сечени). Символ венгерской столицы — парламент. Его кружевное здание впечатляет даже видавших виды суперзвёзд — однажды его хотел купить Фредди Меркьюри.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Отметьте на карте Рыбацкий бастион, лучший вид на парламент открывается именно отсюда. Рядом с бастионом — красивая церковь святого Матьяша. По Будапешту очень приятно гулять, здесь много парков и зелёных зон. А ещё в городе очень удобный общественный транспорт, на котором легко добраться из Буды в Пешт и обратно. Ну а вечером можно нырнуть в один из горячих термальных бассейнов.",
         "places": [
             {"id": 1181, "name": "", "photo": "/images/budapest/b1.jpg", "description": "", "link": ""},
             {"id": 1182, "name": "", "photo": "/images/budapest/b2.jpg", "description": "", "link": ""},
@@ -572,9 +571,9 @@
             {"photo":"/images/copenhagen/copenhagen9.jpg", "autor":""},
             {"photo":"/images/copenhagen/copenhagen10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Лучше всего приезжать в Копенгаген летом, иначе он может показаться обманчиво неприветливым из-за сильного ветра с моря.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Среди достопримечательностей — архитектурный комплекс Амалиенборг, бывшая королевская резиденция Розенборг и набережная Нюхавн с цветными домами и мачтами кораблей — именно это место регулярно попадает на открытки и магниты. Если путешествуете с детьми, загляните в знаменитый парк аттракционов «Тиволи», а если не боитесь толп туристов, постарайтесь отыскать памятник Русалочке.",
         "places": [
             {"id": 1191, "name": "", "photo": "/images/copenhagen/c1.jpg", "description": "", "link": ""},
             {"id": 1192, "name": "", "photo": "/images/copenhagen/c2.jpg", "description": "", "link": ""},
@@ -601,9 +600,9 @@
             {"photo":"/images/munich/munich9.jpg", "autor":""},
             {"photo":"/images/munich/munich10.jpg", "autor":""}
         ],
-        "firstDescription": "",
-        "secondDescription": "",
-        "thirdDescription": "",
+        "firstDescription": "Мюнхен — не только столица пива и колбасок, этот город может похвастаться красивой архитектурой.",
+        "secondDescription": "Знакомство с городом можно начать у ратуши на Мариенплац, которая летом утопает в цветах, а зимой — в рождественских декорациях. Если хотите красивых видов, смело поднимайтесь на смотровую. Неподалёку — Азамкирхе, одна из самых красивых церквей во всей Германии.",
+        "thirdDescription": "Любителей дворцов и парков точно порадует поездка в Нимфенбург — резиденцию баварских правителей в стиле барокко. В хорошую погоду можно погулять по Английскому саду — одному из крупнейших парков мира.",
         "places": [
             {"id": 1201, "name": "", "photo": "/images/munich/m1.jpg", "description": "", "link": ""},
             {"id": 1202, "name": "", "photo": "/images/munich/m2.jpg", "description": "", "link": ""},
@@ -630,9 +629,9 @@
             {"photo":"/images/rio/rio9.jpg", "autor":""},
             {"photo":"/images/rio/rio10.jpg", "autor":""}
         ],
-        "firstDescription": "",
-        "secondDescription": "",
-        "thirdDescription": "",
+        "firstDescription": "Рио-де-Жанейро считается одним из самых красивых городов Южной Америки.",
+        "secondDescription": "Скалистые горы, зелёные холмы и живописные лагуны создают захватывающие панорамы, которые хочется запомнить и фотографировать.",
+        "thirdDescription": "Доминанта ландшафта — гора Сахарная голова, куда можно подняться по канатной дороге, а самые красивые закаты ищите на пляжах Ипанема и Копакабана. И всё же главный символ города — статуя Христа-Искупителя на горе Корковадо. Монументальное сооружение внесено в список новых чудес света.",
         "places": [
             {"id": 1211, "name": "", "photo": "/images/rio/r1.jpg", "description": "", "link": ""},
             {"id": 1212, "name": "", "photo": "/images/rio/r2.jpg", "description": "", "link": ""},
@@ -659,9 +658,9 @@
             {"photo":"/images/buenos-aires/buenos-aires9.jpg", "autor":""},
             {"photo":"/images/buenos-aires/buenos-aires10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Именно этот красивый портовый город — родина танго. Иммигранты привозили сюда свои танцы, и танго появилось на их основе. В столице Аргентины вы увидите влияние множества культур, в частности испанской, итальянской, французской. Например, в городе множество зданий, напоминающих парижские бежевые дома, есть и примеры испанской архитектуры. За это сочетание Буэнос-Айрес называют «южноамериканской Европой».",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Путешественников ждёт насыщенная ночная жизнь, особенно в этом отношении из всех районов столицы выделяется Палермо, здесь много модных дискотек. В целом Буэнос-Айрес — это пёстрый, динамичный и яркий город со своей историей. Некоторые туристические достопримечательности — театр Колон, знаменитый 37-метровый Обелиск на Avenida 9 de Julio, площадь Плаза де Майо. ",
         "places": [
             {"id": 1221, "name": "", "photo": "/images/buenos-aires/ba1.jpg", "description": "", "link": ""},
             {"id": 1222, "name": "", "photo": "/images/buenos-aires/ba2.jpg", "description": "", "link": ""},
@@ -688,9 +687,9 @@
             {"photo":"/images/sydney/sydney9.jpg", "autor":""},
             {"photo":"/images/sydney/sydney10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Визитная карточка Сиднея — его оперный театр, который регулярно попадает в списки лучших архитектурных сооружений мира. Можно любоваться им издалека, а можно изучать город со смотровой площадки на нём — оба варианта по-своему хороши.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Ещё одна обзорная точка находится на Сиднейской башне — самом высоком здании города. Среди других достопримечательностей — мост Харбор-Бридж, залив Порт-Джексон и маяк Хорнби. А ещё в Сиднее более сотни живописных пляжей — для сёрферов и не только.",
         "places": [
             {"id": 1231, "name": "", "photo": "/images/sydney/s1.jpg", "description": "", "link": ""},
             {"id": 1232, "name": "", "photo": "/images/sydney/s2.jpg", "description": "", "link": ""},
@@ -717,9 +716,9 @@
             {"photo":"/images/stockholm/stockholm9.jpg", "autor":""},
             {"photo":"/images/stockholm/stockholm10.jpg", "autor":""}
         ],
-        "firstDescription": "",
+        "firstDescription": "Живописный город расположен на 14 островах и славится множеством красивых исторических зданий. Среди них — готический собор Сторкиркан и потрясающая церковь Риддархольмен.",
         "secondDescription": "",
-        "thirdDescription": "",
+        "thirdDescription": "Прогуляйтесь по старому городу с его яркими домами и мощёными улочками, загляните в Королевский дворец. Лучшая обзорная площадка Стокгольма называется Скиннарвиксбергет, ищите её на острове Сёдермальм, который за последнее время успел превратиться из рабочего квартала в богемный район.",
         "places": [
             {"id": 1241, "name": "", "photo": "/images/stockholm/s1.jpg", "description": "", "link": ""},
             {"id": 1242, "name": "", "photo": "/images/stockholm/s2.jpg", "description": "", "link": ""},

@@ -22,7 +22,9 @@
     "username": "danils",
     "email": "dshurik618@gmail.com",
     "password": "йцукен618",
-    "tours": [],
+    "tours": [
+      103
+    ],
     "avatar": "1747282327518-194407093.png"
   }
 ]

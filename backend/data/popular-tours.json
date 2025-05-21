@@ -31,14 +31,14 @@
     "id": 105, 
     "title": "Венеция, Италия", 
     "description": "Карнавальные маски и каналы",
-    "image": "/images/venice/venice1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/123/055/dvorets-dozhey_150.jpg",
     "tags": ["Культура", "История", "Романтика", "Карнавал", "Каналы", "Искусство"]
   },
   { 
     "id": 106, 
     "title": "Лондон, Великобритания", 
     "description": "Весна в королевских парках",
-    "image": "/images/london/london1.jpg",
+    "image": "https://wikiway.com/upload/iblock/c3b/Vid-na-Vestminsterskiy-dvorets-i-Big_Ben.jpg",
     "tags": ["Парки", "История", "Городской отдых", "Музеи", "Шоппинг", "Архитектура"]
   },
   { 

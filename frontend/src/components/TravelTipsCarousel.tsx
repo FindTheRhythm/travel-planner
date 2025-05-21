@@ -17,14 +17,17 @@ interface TravelTipsCarouselProps {
 const TravelTipsCarousel: React.FC<TravelTipsCarouselProps> = ({ tips }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fade, setFade] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Автоматическая прокрутка каждые 10 секунд
   useEffect(() => {
-    const interval = setInterval(() => {
-      handleNext();
-    }, 10000);
-    return () => clearInterval(interval);
-  }, [currentIndex]);
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        handleNext();
+      }, 10000);
+      return () => clearInterval(interval);
+    }
+  }, [currentIndex, isPaused]);
 
   const handleNext = () => {
     setFade(false);
@@ -46,6 +49,12 @@ const TravelTipsCarousel: React.FC<TravelTipsCarouselProps> = ({ tips }) => {
 
   return (
     <Box
+      component="section"
+      role="region"
+      aria-roledescription="карусель"
+      aria-label="Советы путешественникам"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
       sx={{
         position: 'relative',
         width: '100%',
@@ -62,9 +71,9 @@ const TravelTipsCarousel: React.FC<TravelTipsCarouselProps> = ({ tips }) => {
         justifyContent: 'center',
       }}
     >
-      {/* Левая стрелка */}
       <IconButton
         onClick={handlePrev}
+        aria-label="Предыдущий совет"
         sx={{
           position: 'absolute',
           left: 16,
@@ -78,22 +87,40 @@ const TravelTipsCarousel: React.FC<TravelTipsCarouselProps> = ({ tips }) => {
           },
         }}
       >
-        <ArrowBackIcon />
+        <ArrowBackIcon aria-hidden="true" />
       </IconButton>
 
-      {/* Совет с плавным появлением */}
       <Fade in={fade} timeout={300}>
-        <Box sx={{ textAlign: 'center', px: 4 }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
+        <Box 
+          sx={{ textAlign: 'center', px: 4 }}
+          role="tabpanel"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <Typography 
+            variant="h6" 
+            component="h2"
+            sx={{ fontWeight: 'bold', mb: 1 }}
+          >
             {tip.title}
           </Typography>
-          <Typography variant="body1">{tip.text}</Typography>
+          <Typography variant="body1" component="p">
+            {tip.text}
+          </Typography>
+          <Box 
+            component="div" 
+            role="status" 
+            aria-label="Позиция в карусели"
+            sx={{ mt: 2 }}
+          >
+            {currentIndex + 1} из {tips.length}
+          </Box>
         </Box>
       </Fade>
 
-      {/* Правая стрелка */}
       <IconButton
         onClick={handleNext}
+        aria-label="Следующий совет"
         sx={{
           position: 'absolute',
           right: 16,
@@ -107,7 +134,7 @@ const TravelTipsCarousel: React.FC<TravelTipsCarouselProps> = ({ tips }) => {
           },
         }}
       >
-        <ArrowForwardIcon />
+        <ArrowForwardIcon aria-hidden="true" />
       </IconButton>
     </Box>
   );

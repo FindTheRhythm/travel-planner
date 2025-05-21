@@ -107,19 +107,42 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
       }}
       className="no-shift"
     >
-      <Toolbar sx={{ height: 64, pr: 0 }}>
+      <Toolbar 
+        component="nav"
+        aria-label="Основная навигация"
+        sx={{ 
+          height: { xs: 68, sm: 77 },
+          pr: { xs: 1, sm: 0 }
+        }}
+      >
         <Typography 
           component={Link} 
           to="/" 
           onClick={handleTitleClick}
+          variant="h1"
+          aria-label="Планировщик Путешествий - На главную"
           sx={{
             color: 'inherit', 
             textDecoration: 'none',
             cursor: 'pointer',
-            fontSize: '1.25rem',
+            fontSize: {
+              xs: '1.32rem',
+              sm: '1.5rem'
+            },
             fontWeight: 500,
             zIndex: 1,
-            padding: '8px 16px',
+            padding: {
+              xs: '10px',
+              sm: '10px 19px'
+            },
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            maxWidth: {
+              xs: '240px',
+              sm: '360px',
+              md: 'none'
+            },
             '&:hover': {
               textDecoration: 'none',
               color: 'inherit'
@@ -133,7 +156,17 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
           <NavButton to="/travels/explore">
             <SearchIcon sx={{ fontSize: 24 }} />
           </NavButton>
-          <NavButton to="/about">О Проекте</NavButton>
+          <NavButton to="/about">
+            <Typography sx={{ 
+              display: 'flex', 
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+              fontSize: { xs: '0.9rem', sm: '1rem' }
+            }}>
+              О Проекте
+            </Typography>
+          </NavButton>
           {user ? (
             <>
               <Box
@@ -147,18 +180,24 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
               >
                 <Button
                   onClick={handleMenuOpen}
-                  sx={{
+                  aria-haspopup="true"
+                  aria-expanded={Boolean(anchorEl)}
+                  aria-controls={Boolean(anchorEl) ? 'user-menu' : undefined}
+                  sx={{ 
                     height: '100%',
+                    minHeight: { xs: 68, sm: 77 },
                     borderRadius: 0,
-                    px: 3,
+                    px: { xs: 1.2, sm: 2.4, md: 3.6 },
                     position: 'relative',
                     transition: 'all 0.2s ease-in-out',
                     backgroundColor: Boolean(anchorEl) ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
                     borderBottom: Boolean(anchorEl) ? '3px solid #fff' : '3px solid transparent',
                     color: 'white',
-                    display: 'flex',
+                    display: 'grid',
+                    gridTemplateColumns: 'auto auto',
                     alignItems: 'center',
-                    gap: 1,
+                    justifyContent: 'start',
+                    columnGap: '10px',
                     textTransform: 'none',
                     borderTopRightRadius: { xs: 0, sm: '12px' },
                     '&:hover': {
@@ -169,26 +208,39 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
                   {user.avatar ? (
                     <Avatar
                       src={`${API_BASE_URL}/uploads/avatars/${user.avatar}`}
+                      alt={`Аватар пользователя ${user.username}`}
                       sx={{
-                        width: 32,
-                        height: 32,
-                        border: '1px solid white'
+                        width: { xs: 34, sm: 38 },
+                        height: { xs: 34, sm: 38 },
+                        border: '1px solid white',
+                        display: 'flex',
+                        alignSelf: 'center'
                       }}
                     />
                   ) : (
                     <PersonIcon 
+                      aria-hidden="true"
                       sx={{ 
                         color: 'transparent',
                         stroke: 'white',
                         strokeWidth: 1,
-                        fontSize: 28
+                        fontSize: { xs: 29, sm: 34 },
+                        display: 'flex',
+                        alignSelf: 'center'
                       }} 
                     />
                   )}
                   <Typography 
                     sx={{ 
                       display: { xs: 'none', sm: 'block' },
-                      fontWeight: 500
+                      fontWeight: 500,
+                      maxWidth: { sm: '120px', md: '200px' },
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      alignSelf: 'center',
+                      textAlign: 'center',
+                      pr: { sm: 2.25, md: 3 }
                     }}
                   >
                     {user.username}
