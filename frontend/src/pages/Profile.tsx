@@ -18,7 +18,12 @@ import {
   Tab,
   Divider,
   CircularProgress,
-  Chip
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
@@ -27,6 +32,11 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import HistoryIcon from '@mui/icons-material/History';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete';
+import TagChip from '../components/TagChip';
+
+// Константы для цветов в соответствии с NavBar
+const MAIN_COLOR = '#2c3e50';
+
 
 interface Travel {
   id: number;
@@ -88,9 +98,10 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
   const [avatar, setAvatar] = useState<string>(
     user.avatar ? `${API_BASE_URL}/uploads/avatars/${user.avatar}` : ''
   );
-  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [message, setMessage] = useState<{ type: 'success' | 'error' | 'info' | 'warning', text: string } | null>(null);
   const [savedTravels, setSavedTravels] = useState<Travel[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -123,6 +134,17 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Функция для установки сообщения с предварительной очисткой предыдущего
+  const showMessage = (type: 'success' | 'error' | 'info' | 'warning', text: string) => {
+    // Сначала очищаем предыдущее сообщение
+    setMessage(null);
+    
+    // Затем через небольшую задержку устанавливаем новое
+    setTimeout(() => {
+      setMessage({ type, text });
+    }, 100);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,62 +183,109 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
 
       const result = await response.json();
       setAvatar(`${API_BASE_URL}/uploads/avatars/${result.avatar}`);
-      setMessage({ type: 'success', text: 'Аватар успешно обновлен' });
+      showMessage('success', 'Аватар успешно обновлен');
 
       // Обновляем данные пользователя в родительском компоненте
       onUpdateUser({
         ...user,
         avatar: result.avatar
       });
+      
+      // Обновляем страницу, чтобы все элементы интерфейса корректно отобразились
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error) {
       console.error('Error uploading avatar:', error);
-      setMessage({ 
-        type: 'error', 
-        text: error instanceof Error 
-          ? error.message 
-          : 'Ошибка при загрузке аватара'
-      });
+      showMessage('error', error instanceof Error 
+        ? error.message 
+        : 'Ошибка при загрузке аватара');
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Проверка, были ли внесены изменения
+    if (userData.username === user.username && 
+        userData.email === user.email && 
+        !userData.currentPassword && 
+        !userData.newPassword && 
+        !userData.confirmPassword) {
+      showMessage('info', 'Нет изменений для сохранения');
+      return;
+    }
+    
     // Базовая валидация
     if (!userData.username.trim()) {
-      setMessage({ type: 'error', text: 'Имя пользователя не может быть пустым' });
+      showMessage('error', 'Имя пользователя не может быть пустым');
       return;
     }
-
     if (!userData.email.trim()) {
-      setMessage({ type: 'error', text: 'Email не может быть пустым' });
+      showMessage('error', 'Email не может быть пустым');
       return;
     }
-
+    
     // Проверка email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(userData.email)) {
-      setMessage({ type: 'error', text: 'Введите корректный email' });
+      showMessage('error', 'Введите корректный email');
       return;
     }
-
+    
     // Проверка паролей только если пользователь пытается их изменить
     if (userData.newPassword || userData.currentPassword) {
       if (!userData.currentPassword) {
-        setMessage({ type: 'error', text: 'Введите текущий пароль' });
+        showMessage('error', 'Введите текущий пароль');
         return;
       }
       if (userData.newPassword && userData.newPassword.length < 6) {
-        setMessage({ type: 'error', text: 'Новый пароль должен быть не менее 6 символов' });
+        showMessage('error', 'Новый пароль должен быть не менее 6 символов');
         return;
       }
       if (userData.newPassword !== userData.confirmPassword) {
-        setMessage({ type: 'error', text: 'Пароли не совпадают' });
+        showMessage('error', 'Пароли не совпадают');
         return;
       }
     }
 
     try {
+      // Если пользователь ввел текущий пароль, проверяем его перед обновлением профиля
+      if (userData.currentPassword) {
+        try {
+          const verifyPasswordResponse = await fetch(`${API_BASE_URL}/verifyPassword`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+              userId: user.id,
+              password: userData.currentPassword
+            })
+          });
+
+          if (!verifyPasswordResponse.ok) {
+            // Если сервер вернул ошибку 401 - неверный пароль
+            if (verifyPasswordResponse.status === 401) {
+              showMessage('error', 'Неверный текущий пароль');
+              return;
+            } 
+            // Другие ошибки сервера
+            const errorData = await verifyPasswordResponse.json().catch(() => null);
+            throw new Error(
+              errorData?.message || 
+              `Ошибка проверки пароля: ${verifyPasswordResponse.status} ${verifyPasswordResponse.statusText}`
+            );
+          }
+        } catch (error) {
+          // Если эндпоинт не существует или другая ошибка сети, продолжаем без проверки
+          console.warn('Не удалось проверить пароль, продолжаем без проверки:', error);
+          // Не показываем ошибку пользователю, так как это может быть связано с отсутствием эндпоинта
+        }
+      }
+
       const response = await fetch(`${API_BASE_URL}/updateProfile`, {
         method: 'POST',
         headers: {
@@ -261,7 +330,12 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
       }));
 
       setIsEditing(false);
-      setMessage({ type: 'success', text: 'Профиль успешно обновлен' });
+      showMessage('success', 'Профиль успешно обновлен');
+      
+      // Обновляем страницу для актуализации всех элементов интерфейса
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error) {
       console.error('Error updating profile:', error);
       
@@ -271,17 +345,19 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
         errorMessage = error.message;
       }
       
-      setMessage({ 
-        type: 'error', 
-        text: errorMessage
-      });
+      showMessage('error', errorMessage);
     }
   };
 
   const handleDeleteAccount = async () => {
-    const confirmed = window.confirm('Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.');
-    if (!confirmed) return;
-
+    // Открываем диалог подтверждения вместо window.confirm
+    setConfirmDeleteOpen(true);
+  };
+  
+  const confirmDelete = async () => {
+    // Закрываем диалог
+    setConfirmDeleteOpen(false);
+    
     try {
       const response = await fetch(`${API_BASE_URL}/auth/delete-account/${user.id}`, {
         method: 'DELETE',
@@ -298,15 +374,12 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
         sessionStorage.clear();
         
         // Показываем сообщение об успехе
-        setMessage({
-          type: 'success',
-          text: 'Аккаунт успешно удален'
-        });
+        showMessage('success', 'Аккаунт успешно удален');
 
-        // Делаем небольшую задержку, чтобы пользователь увидел сообщение
+        // Делаем небольшую задержку, чтобы пользователь увидел сообщение, затем перенаправляем
+        // Используем прямой редирект вместо React Router для полной перезагрузки страницы
         setTimeout(() => {
-          // Перенаправляем на страницу входа
-          navigate('/login', { replace: true });
+          window.location.href = '/login';
         }, 1500);
       } else {
         const errorData = await response.json().catch(() => ({ error: 'Ошибка удаления аккаунта' }));
@@ -314,12 +387,9 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
       }
     } catch (error) {
       console.error('Error deleting account:', error);
-      setMessage({ 
-        type: 'error', 
-        text: error instanceof Error 
-          ? error.message 
-          : 'Ошибка при удалении аккаунта'
-      });
+      showMessage('error', error instanceof Error 
+        ? error.message 
+        : 'Ошибка при удалении аккаунта');
     }
   };
 
@@ -341,15 +411,17 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
       }
 
       setSavedTravels(prev => prev.filter(travel => travel.id !== travelId));
-      setMessage({ type: 'success', text: 'Путешествие удалено из сохраненных' });
+      showMessage('success', 'Путешествие удалено из сохраненных');
+      
+      // Обновляем страницу через небольшую задержку для корректного отображения интерфейса
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error('Error removing travel:', error);
-      setMessage({ 
-        type: 'error', 
-        text: error instanceof Error 
-          ? error.message 
-          : 'Ошибка при удалении путешествия'
-      });
+      showMessage('error', error instanceof Error 
+        ? error.message 
+        : 'Ошибка при удалении путешествия');
     }
   };
 
@@ -363,8 +435,16 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
       <Grid container spacing={4}>
         {/* Левая колонка с информацией профиля */}
         <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Paper sx={{ 
+            p: 3, 
+            display: 'flex',
+            flexDirection: 'column',
+            height: 'fit-content',
+            minHeight: '350px',
+            borderTop: `3px solid ${MAIN_COLOR}`,
+            borderRadius: 2
+          }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexGrow: 1 }}>
               <Box sx={{ position: 'relative' }}>
                 <Avatar
                   src={avatar}
@@ -373,8 +453,9 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                     height: 150, 
                     mb: 2,
                     cursor: 'pointer',
+                    border: `3px solid ${MAIN_COLOR}`,
                     '&:hover': {
-                      opacity: 0.8
+                      opacity: 0.9
                     }
                   }}
                   onClick={handleAvatarClick}
@@ -384,8 +465,8 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                     position: 'absolute',
                     bottom: 16,
                     right: -8,
-                    backgroundColor: 'primary.main',
-                    '&:hover': { backgroundColor: 'primary.dark' }
+                    backgroundColor: MAIN_COLOR,
+                    '&:hover': { backgroundColor: '#2980b9' }
                   }}
                   onClick={handleAvatarClick}
                 >
@@ -399,15 +480,35 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                 accept="image/*"
                 style={{ display: 'none' }}
               />
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" gutterBottom sx={{ color: MAIN_COLOR }}>
                 {user.username}
               </Typography>
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 {user.email}
               </Typography>
               <Box sx={{ mt: 2, display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
-                <Chip icon={<LocationOnIcon />} label={`${savedTravels.length} мест`} />
-                <Chip icon={<FavoriteIcon />} label="Путешественник" color="primary" />
+                <Chip 
+                  icon={<LocationOnIcon />} 
+                  label={`${savedTravels.length} мест`}
+                  sx={{ 
+                    bgcolor: 'rgba(52, 152, 219, 0.1)',
+                    color: MAIN_COLOR,
+                    '& .MuiChip-icon': {
+                      color: MAIN_COLOR
+                    }
+                  }}
+                />
+                <Chip 
+                  icon={<FavoriteIcon />} 
+                  label="Путешественник" 
+                  sx={{ 
+                    bgcolor: MAIN_COLOR,
+                    color: 'white',
+                    '& .MuiChip-icon': {
+                      color: 'white'
+                    }
+                  }}
+                />
               </Box>
             </Box>
           </Paper>
@@ -415,32 +516,65 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
 
         {/* Правая колонка с табами */}
         <Grid item xs={12} md={8}>
-          <Paper sx={{ width: '100%' }}>
+          <Paper sx={{ 
+            width: '100%',
+            borderRadius: 2,
+            overflow: 'hidden'
+          }}>
             <Tabs
               value={activeTab}
               onChange={(_, newValue) => setActiveTab(newValue)}
               variant="fullWidth"
+              sx={{
+                '& .MuiTabs-indicator': {
+                  backgroundColor: MAIN_COLOR
+                },
+                '& .MuiTab-root': {
+                  color: 'text.secondary',
+                  '&.Mui-selected': {
+                    color: MAIN_COLOR
+                  }
+                }
+              }}
             >
-              <Tab icon={<FavoriteIcon />} label="Сохраненные места" />
-              <Tab icon={<SettingsIcon />} label="Настройки" />
+              <Tab 
+                icon={<FavoriteIcon />} 
+                label="Сохраненные места"
+                sx={{ 
+                  '&.Mui-selected': {
+                    color: MAIN_COLOR
+                  }
+                }}
+              />
+              <Tab 
+                icon={<SettingsIcon />} 
+                label="Настройки"
+                sx={{ 
+                  '&.Mui-selected': {
+                    color: MAIN_COLOR
+                  }
+                }}
+              />
             </Tabs>
 
             <TabPanel value={activeTab} index={0}>
               {isLoading ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
-                  <CircularProgress />
+                  <CircularProgress sx={{ color: MAIN_COLOR }} />
                 </Box>
               ) : savedTravels.length > 0 ? (
-                <Grid container spacing={2}>
+                <Grid container spacing={2} sx={{ px: 2, py: 1 }}>
                   {savedTravels.map((travel) => (
                     <Grid item xs={12} sm={6} key={travel.id}>
                       <Card 
                         sx={{ 
                           cursor: 'pointer',
+                          borderRadius: 2,
+                          transition: 'all 0.2s ease-in-out',
+                          mx: { xs: 0.5, sm: 1 },
                           '&:hover': {
-                            boxShadow: 6,
-                            transform: 'translateY(-2px)',
-                            transition: 'all 0.2s ease-in-out'
+                            boxShadow: 3,
+                            backgroundColor: 'rgba(44, 62, 80, 0.02)'
                           }
                         }}
                         onClick={() => navigate(`/travels/${travel.id}`)}
@@ -472,7 +606,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                           </IconButton>
                         </Box>
                         <CardContent>
-                          <Typography variant="h6" gutterBottom>
+                          <Typography variant="h6" gutterBottom sx={{ color: MAIN_COLOR }}>
                             {travel.title}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
@@ -480,25 +614,10 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                           </Typography>
                           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 1 }}>
                             {(travel.tags || []).map((tag) => (
-                              <Chip
+                              <TagChip
                                 key={tag}
-                                label={tag}
-                                size="small"
-                                onClick={(e) => handleTagClick(tag, e)}
-                                sx={{
-                                  backgroundColor: 'grey.100',
-                                  color: 'text.primary',
-                                  borderRadius: 1.5,
-                                  cursor: 'pointer',
-                                  transition: 'all 0.2s ease-in-out',
-                                  '&:hover': {
-                                    transform: 'scale(1.05)',
-                                    backgroundColor: 'grey.200',
-                                  },
-                                  '&:active': {
-                                    transform: 'scale(0.95)',
-                                  }
-                                }}
+                                tag={tag}
+                                onClick={handleTagClick}
                               />
                             ))}
                           </Box>
@@ -515,7 +634,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                     textAlign: 'center'
                   }}
                 >
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h6" gutterBottom sx={{ color: MAIN_COLOR }}>
                     У вас пока нет сохраненных мест
                   </Typography>
                   <Typography variant="body1" sx={{ mb: 3, color: 'text.secondary' }}>
@@ -535,7 +654,11 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                         minWidth: 200,
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 1
+                        gap: 1,
+                        bgcolor: MAIN_COLOR,
+                        '&:hover': {
+                          bgcolor: '#2980b9'
+                        }
                       }}
                     >
                       🌟 Посмотреть подборку
@@ -548,7 +671,13 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                         minWidth: 200,
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 1
+                        gap: 1,
+                        borderColor: MAIN_COLOR,
+                        color: MAIN_COLOR,
+                        '&:hover': {
+                          borderColor: '#2980b9',
+                          bgcolor: 'rgba(52, 152, 219, 0.08)'
+                        }
                       }}
                     >
                       🔍 Найти самостоятельно
@@ -567,6 +696,14 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   fullWidth
+                  sx={{
+                    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: MAIN_COLOR
+                    },
+                    '& .MuiInputLabel-root.Mui-focused': {
+                      color: MAIN_COLOR
+                    }
+                  }}
                 />
                 <TextField
                   label="Email"
@@ -576,6 +713,14 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   fullWidth
+                  sx={{
+                    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: MAIN_COLOR
+                    },
+                    '& .MuiInputLabel-root.Mui-focused': {
+                      color: MAIN_COLOR
+                    }
+                  }}
                 />
                 {isEditing && (
                   <>
@@ -591,6 +736,14 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                       value={userData.currentPassword}
                       onChange={handleInputChange}
                       fullWidth
+                      sx={{
+                        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                          borderColor: MAIN_COLOR
+                        },
+                        '& .MuiInputLabel-root.Mui-focused': {
+                          color: MAIN_COLOR
+                        }
+                      }}
                     />
                     <TextField
                       label="Новый пароль"
@@ -599,6 +752,14 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                       value={userData.newPassword}
                       onChange={handleInputChange}
                       fullWidth
+                      sx={{
+                        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                          borderColor: MAIN_COLOR
+                        },
+                        '& .MuiInputLabel-root.Mui-focused': {
+                          color: MAIN_COLOR
+                        }
+                      }}
                     />
                     <TextField
                       label="Подтвердите новый пароль"
@@ -607,6 +768,14 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                       value={userData.confirmPassword}
                       onChange={handleInputChange}
                       fullWidth
+                      sx={{
+                        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                          borderColor: MAIN_COLOR
+                        },
+                        '& .MuiInputLabel-root.Mui-focused': {
+                          color: MAIN_COLOR
+                        }
+                      }}
                     />
                   </>
                 )}
@@ -615,6 +784,14 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                     variant="outlined"
                     onClick={() => setIsEditing(!isEditing)}
                     startIcon={<EditIcon />}
+                    sx={{
+                      borderColor: MAIN_COLOR,
+                      color: MAIN_COLOR,
+                      '&:hover': {
+                        borderColor: '#2980b9',
+                        bgcolor: 'rgba(52, 152, 219, 0.08)'
+                      }
+                    }}
                   >
                     {isEditing ? 'Отменить' : 'Редактировать'}
                   </Button>
@@ -622,7 +799,12 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                     <Button
                       type="submit"
                       variant="contained"
-                      color="primary"
+                      sx={{
+                        bgcolor: MAIN_COLOR,
+                        '&:hover': {
+                          bgcolor: '#2980b9'
+                        }
+                      }}
                     >
                       Сохранить изменения
                     </Button>
@@ -661,15 +843,54 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
         </Grid>
       </Grid>
 
+      {/* Диалог подтверждения удаления аккаунта */}
+      <Dialog
+        open={confirmDeleteOpen}
+        onClose={() => setConfirmDeleteOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" sx={{ color: 'error.main' }}>
+          Подтверждение удаления
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Вы уверены, что хотите удалить свой аккаунт? Это действие необратимо. 
+            Все ваши данные будут полностью удалены из системы.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDeleteOpen(false)} sx={{ color: MAIN_COLOR }}>
+            Отмена
+          </Button>
+          <Button onClick={confirmDelete} color="error" variant="contained" autoFocus>
+            Удалить аккаунт
+          </Button>
+        </DialogActions>
+      </Dialog>
+      
       <Snackbar
         open={!!message}
         autoHideDuration={6000}
         onClose={() => setMessage(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        sx={{ 
+          zIndex: (theme) => theme.zIndex.drawer + 1500,
+          position: 'fixed'
+        }}
       >
         <Alert
           onClose={() => setMessage(null)}
           severity={message?.type}
-          sx={{ width: '100%' }}
+          variant="filled"
+          elevation={6}
+          sx={{ 
+            width: '100%',
+            boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)',
+            '& .MuiAlert-message': {
+              fontSize: '1rem'
+            }
+          }}
         >
           {message?.text}
         </Alert>

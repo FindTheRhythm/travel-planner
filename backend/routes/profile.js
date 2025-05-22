@@ -37,6 +37,28 @@ function writeUsers(users) {
   fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
 }
 
+// Проверка текущего пароля пользователя
+router.post('/verifyPassword', (req, res) => {
+  const { userId, password } = req.body;
+  
+  if (!userId || !password) {
+    return res.status(400).json({ error: 'Необходимо указать ID пользователя и пароль' });
+  }
+  
+  const users = readUsers();
+  const user = users.find(u => u.id === userId);
+  
+  if (!user) {
+    return res.status(404).json({ error: 'Пользователь не найден' });
+  }
+  
+  if (user.password !== password) {
+    return res.status(401).json({ error: 'Неверный пароль' });
+  }
+  
+  res.json({ success: true, message: 'Пароль верный' });
+});
+
 // Обновить профиль пользователя
 router.post('/updateProfile', (req, res) => {
   const { userId, username, email, currentPassword, newPassword } = req.body;

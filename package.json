@@ -1,0 +1,17 @@
+{
+    "name": "travel-planner",
+    "version": "1.0.0",
+    "description": "Travel Planner Application",
+    "scripts": {
+        "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+        "start:frontend": "cd frontend && npm start",
+        "start:backend": "cd backend && npm run dev",
+        "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+        "build": "cd frontend && npm run build",
+        "lint:all": "cd frontend && npm run lint && cd ../backend && npm run lint",
+        "format:all": "cd frontend && npm run format && cd ../backend && npm run format"
+    },
+    "devDependencies": {
+        "concurrently": "8.2.2"
+    }
+} 
