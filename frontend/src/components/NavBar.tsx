@@ -214,7 +214,14 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
                       height: { xs: 34, sm: 38 },
                       border: '1px solid white',
                       display: 'flex',
-                      alignSelf: 'center'
+                      alignSelf: 'center',
+                      backgroundColor: '#fff'
+                    }}
+                    imgProps={{
+                      onError: (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                        const img = e.target as HTMLImageElement;
+                        img.src = `${API_BASE_URL}/images/default-avatar.png`;
+                      }
                     }}
                   />
                 ) : (

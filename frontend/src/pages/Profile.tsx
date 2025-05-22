@@ -163,6 +163,19 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Проверяем размер файла (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      showMessage('error', 'Размер файла не должен превышать 5MB');
+      return;
+    }
+
+    // Проверяем тип файла
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      showMessage('error', 'Поддерживаются только форматы JPG, PNG, GIF и WebP');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('avatar', file);
     formData.append('userId', user.id.toString());
@@ -178,7 +191,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => null);
-        throw new Error(errorData?.message || 'Ошибка загрузки аватара');
+        throw new Error(errorData?.error || 'Ошибка загрузки аватара');
       }
 
       const result = await response.json();

@@ -5,6 +5,23 @@ const path = require('path');
 
 const router = express.Router();
 
+// Читаем пользователей из JSON
+function readUsers() {
+  try {
+    const data = fs.readFileSync(path.join(__dirname, '../data/users.json'), 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    return [];
+  }
+}
+
+// Проверяем, является ли пользователь админом
+function isAdmin(userId) {
+  const users = readUsers();
+  const user = users.find(u => u.id === parseInt(userId));
+  return user && user.role === 'admin';
+}
+
 router.get('/', (req, res) => {
   const filePath = path.join(__dirname, '../data/travel-details.json');
 
@@ -168,14 +185,15 @@ router.delete('/:travelId/comments/:commentId', (req, res) => {
         return res.status(404).json({ error: 'Комментарий не найден' });
       }
 
-      // Проверяем, является ли пользователь автором комментария
+      // Проверяем права на удаление
       const comment = data[travelIndex].comments[commentIndex];
       const userIdInt = parseInt(userId);
       
       console.log(`ID пользователя комментария: ${comment.userId}, ID пользователя из запроса: ${userIdInt}`);
       
-      if (comment.userId !== userIdInt) {
-        return res.status(403).json({ error: 'Вы можете удалять только свои комментарии' });
+      // Разрешаем удаление только автору комментария или админу
+      if (comment.userId !== userIdInt && !isAdmin(userIdInt)) {
+        return res.status(403).json({ error: 'У вас нет прав на удаление этого комментария' });
       }
 
       // Удаляем комментарий

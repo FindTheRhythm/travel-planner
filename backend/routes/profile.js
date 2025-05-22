@@ -3,8 +3,28 @@ const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 const multer = require('multer');
+const sharp = require('sharp');
 
 const USERS_FILE = path.join(__dirname, '../data/users.json');
+const AVATAR_SIZE = 200; // размер аватара в пикселях
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+// Валидация файла
+const fileFilter = (req, file, cb) => {
+  // Проверяем MIME тип
+  if (!file.mimetype.startsWith('image/')) {
+    return cb(new Error('Разрешены только изображения'), false);
+  }
+  
+  // Проверяем расширение
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (!allowedExtensions.includes(ext)) {
+    return cb(new Error('Неподдерживаемый формат файла'), false);
+  }
+  
+  cb(null, true);
+};
 
 // Настройка multer для загрузки файлов
 const storage = multer.diskStorage({
@@ -17,11 +37,18 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, uniqueSuffix + ext);
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ 
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: MAX_FILE_SIZE
+  }
+});
 
 // Читать/записывать пользователей из JSON
 function readUsers() {
@@ -36,6 +63,24 @@ function readUsers() {
 function writeUsers(users) {
   fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
 }
+
+// Получить информацию о пользователе, включая аватар
+router.get('/user/:userId', (req, res) => {
+  const userId = parseInt(req.params.userId);
+  const users = readUsers();
+  const user = users.find(u => u.id === userId);
+
+  if (!user) {
+    return res.status(404).json({ error: 'Пользователь не найден' });
+  }
+
+  res.json({
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    avatar: user.avatar
+  });
+});
 
 // Проверка текущего пароля пользователя
 router.post('/verifyPassword', (req, res) => {
@@ -95,34 +140,64 @@ router.post('/updateProfile', (req, res) => {
 });
 
 // Обновить аватар пользователя
-router.post('/updateAvatar', upload.single('avatar'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: 'Файл не загружен' });
-  }
-
-  const userId = parseInt(req.body.userId, 10);
-  const users = readUsers();
-  const userIndex = users.findIndex(u => u.id === userId);
-
-  if (userIndex === -1) {
-    return res.status(404).json({ error: 'Пользователь не найден' });
-  }
-
-  // Удаляем старый аватар, если он существует
-  if (users[userIndex].avatar) {
-    const oldAvatarPath = path.join(__dirname, '../uploads/avatars', users[userIndex].avatar);
-    if (fs.existsSync(oldAvatarPath)) {
-      fs.unlinkSync(oldAvatarPath);
+router.post('/updateAvatar', upload.single('avatar'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'Файл не загружен' });
     }
+
+    const userId = parseInt(req.body.userId, 10);
+    const users = readUsers();
+    const userIndex = users.findIndex(u => u.id === userId);
+
+    if (userIndex === -1) {
+      // Удаляем загруженный файл
+      fs.unlinkSync(req.file.path);
+      return res.status(404).json({ error: 'Пользователь не найден' });
+    }
+
+    // Удаляем старый аватар, если он существует
+    if (users[userIndex].avatar) {
+      const oldAvatarPath = path.join(__dirname, '../uploads/avatars', users[userIndex].avatar);
+      if (fs.existsSync(oldAvatarPath)) {
+        fs.unlinkSync(oldAvatarPath);
+      }
+    }
+
+    // Обрабатываем изображение
+    const processedFileName = path.parse(req.file.filename).name + '.webp';
+    const processedFilePath = path.join(req.file.destination, processedFileName);
+
+    await sharp(req.file.path)
+      .resize(AVATAR_SIZE, AVATAR_SIZE, {
+        fit: 'cover',
+        position: 'center'
+      })
+      .webp({ quality: 80 })
+      .toFile(processedFilePath);
+
+    // Удаляем оригинальный файл
+    fs.unlinkSync(req.file.path);
+
+    // Обновляем путь к аватару
+    users[userIndex].avatar = processedFileName;
+    writeUsers(users);
+
+    res.json({
+      avatar: processedFileName
+    });
+  } catch (error) {
+    // В случае ошибки удаляем загруженный файл
+    if (req.file && fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
+    
+    console.error('Error updating avatar:', error);
+    res.status(500).json({ 
+      error: 'Ошибка при обновлении аватара',
+      details: error.message
+    });
   }
-
-  // Обновляем путь к аватару
-  users[userIndex].avatar = req.file.filename;
-  writeUsers(users);
-
-  res.json({
-    avatar: req.file.filename
-  });
 });
 
 module.exports = router; 

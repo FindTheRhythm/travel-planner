@@ -417,7 +417,12 @@ const TravelDetails: React.FC = () => {
   // Функция для проверки, может ли пользователь удалить комментарий
   const canDeleteComment = (commentUserId: number | null) => {
     const user = getCurrentUser();
-    return user && commentUserId !== null && user.id === commentUserId;
+    return user && (
+      // Пользователь может удалить свой комментарий
+      (commentUserId !== null && user.id === commentUserId) ||
+      // Или пользователь является админом
+      user.role === 'admin'
+    );
   };
 
   return (
@@ -694,15 +699,18 @@ const TravelDetails: React.FC = () => {
                   </Box>
                 )}
 
-                {/* Кнопка удаления комментария (видна только автору) */}
+                {/* Кнопка удаления комментария (видна автору или админу) */}
                 {canDeleteComment(comment.userId) && (
-                  <Tooltip title="Удалить комментарий">
+                  <Tooltip 
+                    title={getCurrentUser()?.role === 'admin' ? 'Удалить комментарий (админ)' : 'Удалить комментарий'}
+                    arrow
+                  >
                     <IconButton 
                       size="small"
                       onClick={() => handleDeleteComment(comment.id)}
                       sx={{ 
                         ml: 1,
-                        color: 'text.secondary',
+                        color: getCurrentUser()?.role === 'admin' ? 'error.main' : 'text.secondary',
                         '&:hover': {
                           color: 'error.main',
                         }

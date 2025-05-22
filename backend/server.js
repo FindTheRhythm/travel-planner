@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 
 // Создаем необходимые директории, если они не существуют
-const directories = ['images', 'uploads/avatars'];
+const directories = ['images', 'uploads/avatars', 'data'];
 directories.forEach(dir => {
     const dirPath = path.join(__dirname, dir);
     if (!fs.existsSync(dirPath)) {
@@ -25,26 +25,55 @@ app.use(cors({
     credentials: true
 }));
 
-// Basic security headers
-app.use((req, res, next) => {
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'DENY');
-    res.setHeader('X-XSS-Protection', '1; mode=block');
-    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-    next();
-});
-
+// Парсинг JSON
 app.use(express.json());
-
-// Публичная раздача файлов
-app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/uploads/avatars', express.static(path.join(__dirname, 'uploads/avatars')));
 
 // Логирование запросов
 app.use((req, res, next) => {
     console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
     next();
 });
+
+// Безопасная раздача файлов
+app.use('/images', (req, res, next) => {
+    // Проверяем расширение файла
+    const ext = path.extname(req.path).toLowerCase();
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    
+    if (!allowedExtensions.includes(ext)) {
+        return res.status(403).json({ error: 'Недопустимый тип файла' });
+    }
+    
+    // Проверяем, что путь не содержит "../" для предотвращения path traversal
+    if (req.path.includes('../')) {
+        return res.status(403).json({ error: 'Недопустимый путь' });
+    }
+    
+    next();
+}, express.static(path.join(__dirname, 'images')));
+
+app.use('/uploads/avatars', (req, res, next) => {
+    // Проверяем расширение файла
+    const ext = path.extname(req.path).toLowerCase();
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    
+    if (!allowedExtensions.includes(ext)) {
+        return res.status(403).json({ error: 'Недопустимый тип файла' });
+    }
+    
+    // Проверяем, что путь не содержит "../" для предотвращения path traversal
+    if (req.path.includes('../')) {
+        return res.status(403).json({ error: 'Недопустимый путь' });
+    }
+    
+    // Устанавливаем заголовки кэширования
+    res.set({
+        'Cache-Control': 'public, max-age=31536000', // 1 год
+        'Expires': new Date(Date.now() + 31536000000).toUTCString()
+    });
+    
+    next();
+}, express.static(path.join(__dirname, 'uploads/avatars')));
 
 // Подключаем маршруты
 try {
@@ -68,10 +97,43 @@ try {
     process.exit(1);
 }
 
-// Обработка ошибок
+// Глобальный обработчик необработанных ошибок
+process.on('uncaughtException', (err) => {
+    console.error('Необработанная ошибка:', err);
+    // Не завершаем процесс, просто логируем ошибку
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Необработанное отклонение промиса:', reason);
+    // Не завершаем процесс, просто логируем ошибку
+});
+
+// Обработка ошибок Express
 app.use((err, req, res, next) => {
-    console.error(`${new Date().toISOString()} Error:`, err.stack);
-    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+    console.error(`${new Date().toISOString()} Error:`, err);
+    
+    // Проверяем тип ошибки и отправляем соответствующий ответ
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+        return res.status(400).json({ error: 'Некорректный JSON' });
+    }
+    
+    if (err.type === 'entity.too.large') {
+        return res.status(413).json({ error: 'Размер данных превышает допустимый' });
+    }
+    
+    // Обработка ошибок multer
+    if (err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(413).json({ error: 'Файл слишком большой' });
+    }
+    
+    if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+        return res.status(400).json({ error: 'Неожиданный файл' });
+    }
+    
+    res.status(err.status || 500).json({ 
+        error: err.message || 'Внутренняя ошибка сервера',
+        details: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    });
 });
 
 // Обработка несуществующих маршрутов
@@ -81,7 +143,31 @@ app.use((req, res) => {
 
 // Запуск сервера
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+let server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+});
+
+// Корректное завершение сервера
+const gracefulShutdown = () => {
+    console.log('Получен сигнал завершения. Закрываем сервер...');
+    server.close(() => {
+        console.log('Сервер успешно закрыт');
+        process.exit(0);
+    });
+
+    // Если сервер не закрылся за 10 секунд, завершаем процесс принудительно
+    setTimeout(() => {
+        console.log('Не удалось закрыть сервер gracefully, завершаем принудительно');
+        process.exit(1);
+    }, 10000);
+};
+
+// Обработка сигналов завершения
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGINT', gracefulShutdown);
+
+// Обработка nodemon restart
+process.once('SIGUSR2', () => {
+    gracefulShutdown();
 });

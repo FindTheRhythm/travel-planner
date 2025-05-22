@@ -9,9 +9,14 @@
         "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
         "build": "cd frontend && npm run build",
         "lint:all": "cd frontend && npm run lint && cd ../backend && npm run lint",
-        "format:all": "cd frontend && npm run format && cd ../backend && npm run format"
+        "format:all": "cd frontend && npm run format && cd ../backend && npm run format",
+        "stop": "taskkill /F /IM node.exe"
     },
     "devDependencies": {
         "concurrently": "8.2.2"
+    },
+    "dependencies": {
+        "multer-sharp-resizer": "^1.0.5",
+        "sharp": "^0.34.2"
     }
-} 
+}

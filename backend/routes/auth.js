@@ -38,11 +38,12 @@ router.post('/register', (req, res) => {
     id: users.length > 0 ? users[users.length - 1].id + 1 : 1,
     username,
     email,
-    password
+    password,
+    avatar: null
   };
   users.push(newUser);
   writeUsers(users);
-  res.json({ message: 'Регистрация успешна', user: { id: newUser.id, username: newUser.username, email: newUser.email } });
+  res.json({ message: 'Регистрация успешна', user: { id: newUser.id, username: newUser.username, email: newUser.email, avatar: newUser.avatar } });
 });
 
 // Вход
@@ -56,7 +57,13 @@ router.post('/login', (req, res) => {
   if (!user) {
     return res.status(401).json({ error: 'Неверный email или пароль.' });
   }
-  res.json({ id: user.id, username: user.username, email: user.email });
+  res.json({ 
+    id: user.id, 
+    username: user.username, 
+    email: user.email,
+    avatar: user.avatar,
+    role: user.role
+  });
 });
 
 // Удаление аккаунта
