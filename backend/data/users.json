@@ -19,12 +19,21 @@
   },
   {
     "id": 5,
-    "username": "danils",
+    "username": "danila",
     "email": "dshurik618@gmail.com",
-    "password": "йцукен618",
+    "password": "123456",
     "tours": [
+      102,
       103
-    ],
-    "avatar": "1747282327518-194407093.png"
+    ]
+  },
+  {
+    "id": 6,
+    "username": "qwwerty",
+    "email": "dshurik123@gmail.com",
+    "password": "123456",
+    "tours": [
+      102
+    ]
   }
 ]

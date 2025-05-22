@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Box, Grid, Pagination, TextField, FormControl, Container, Typography, Card, CardContent, Button, Chip, Autocomplete, useMediaQuery, useTheme } from '@mui/material';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Box, Grid, Pagination, TextField, FormControl, Container, Typography, Card, CardContent, Button, Chip, Autocomplete, useMediaQuery, useTheme, Divider, CardMedia, CircularProgress } from '@mui/material';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import SearchIcon from '@mui/icons-material/Search';
+import TagChip from '../components/TagChip';
 import { API_BASE_URL } from '../config';
+
+// Константы для цветов в соответствии с NavBar
+const MAIN_COLOR = '#2c3e50';
 
 interface Tour {
   id: number;
@@ -13,6 +19,7 @@ interface Tour {
 
 const TourExplorer: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [tours, setTours] = useState<Tour[]>([]);
@@ -21,28 +28,40 @@ const TourExplorer: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const toursPerPage = 6;
+  
+  // Используем useRef для отслеживания первоначальной загрузки
+  const initialLoadDone = useRef(false);
 
-  // Получаем тег из URL при загрузке и при изменении URL
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tagFromUrl = params.get('tag');
-    if (tagFromUrl) {
-      const decodedTag = decodeURIComponent(tagFromUrl);
-      if (!selectedTags.includes(decodedTag)) {
-        setSelectedTags(prev => [...prev, decodedTag]);
-      }
-    }
-  }, [window.location.search]); // Реагируем на изменения URL
-
+  // Получаем данные туров
   useEffect(() => {
     fetch(`${API_BASE_URL}/all-tours`)
       .then(response => response.json())
       .then(data => {
         setTours(data);
         setFilteredTours(data);
+        
+        // После загрузки туров обрабатываем URL параметры
+        const params = new URLSearchParams(location.search);
+        const tagFromUrl = params.get('tag');
+        
+        if (tagFromUrl) {
+          const decodedTag = decodeURIComponent(tagFromUrl);
+          
+          // Добавляем тег из URL к выбранным тегам
+          setSelectedTags(prev => {
+            // Если тег уже есть в списке, не добавляем его повторно
+            if (!prev.includes(decodedTag)) {
+              return [...prev, decodedTag];
+            }
+            return prev;
+          });
+          
+          // Больше не очищаем URL от параметров тега
+          // Оставляем URL с параметром tag как есть
+        }
       })
       .catch(error => console.error('Error fetching tours:', error));
-  }, []);
+  }, []); // Выполняем только при монтировании компонента
 
   useEffect(() => {
     let result = tours;
@@ -88,25 +107,11 @@ const TourExplorer: React.FC = () => {
   const renderTourTags = (tourTags: string[]) => (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
       {tourTags.map((tag) => (
-        <Chip
+        <TagChip
           key={tag}
-          label={tag}
-          size="small"
-          onClick={(e) => handleTagClick(tag, e)}
-          sx={{
-            backgroundColor: selectedTags.includes(tag) ? 'primary.main' : 'grey.100',
-            color: selectedTags.includes(tag) ? 'white' : 'text.primary',
-            borderRadius: 1.5,
-            cursor: 'pointer',
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
-              transform: 'scale(1.05)',
-              backgroundColor: selectedTags.includes(tag) ? 'primary.dark' : 'grey.200',
-            },
-            '&:active': {
-              transform: 'scale(0.95)',
-            }
-          }}
+          tag={tag}
+          onClick={handleTagClick}
+          isActive={selectedTags.includes(tag)}
         />
       ))}
     </Box>
@@ -114,26 +119,56 @@ const TourExplorer: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 2, sm: 3, md: 4 } }}>
-      <Typography 
-        variant="h4" 
-        component="h1" 
+      <Box 
         sx={{ 
-          fontSize: {
-            xs: '1.4rem',
-            sm: '1.7rem',
-            md: '2rem',
-            lg: '2.2rem'
-          },
-          whiteSpace: { xs: 'normal', md: 'nowrap' },
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          mb: { xs: 2, sm: 3 },
-          textAlign: 'center',
-          px: { xs: 2, sm: 0 }
+          position: 'relative',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          mb: { xs: 3, sm: 4 }
         }}
       >
-        Здесь вы можете искать интересующие вас места
-      </Typography>
+        <Divider sx={{ 
+          position: 'absolute', 
+          width: '100%', 
+          borderColor: `rgba(52, 152, 219, 0.3)`
+        }} />
+        
+        <Box sx={{ 
+          backgroundColor: '#fff',
+          px: 3,
+          position: 'relative',
+          zIndex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2
+        }}>
+          <SearchIcon 
+            sx={{ 
+              fontSize: { xs: '2rem', sm: '2.5rem' }, 
+              color: MAIN_COLOR 
+            }} 
+          />
+          <Typography 
+            variant="h4" 
+            component="h1"
+            sx={{ 
+              fontSize: {
+                xs: '1.3rem',
+                sm: '1.8rem',
+                md: '2.2rem',
+                lg: '2.4rem'
+              },
+              textAlign: 'center',
+              fontWeight: 600,
+              color: MAIN_COLOR
+            }}
+          >
+            Поиск туристических мест
+          </Typography>
+        </Box>
+      </Box>
 
       <Box 
         sx={{ 
@@ -160,12 +195,12 @@ const TourExplorer: React.FC = () => {
           }}
         >
           <Box component="span" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-            Найдено мест: <Box component="span" sx={{ fontWeight: 600 }}>{filteredTours.length}</Box>
+            Найдено мест: <Box component="span" sx={{ fontWeight: 600, color: MAIN_COLOR }}>{filteredTours.length}</Box>
           </Box>
           {selectedTags.length > 0 && (
             <Box component="span" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
               <Box component="span" sx={{ mx: { xs: 0, sm: 1 }}}>•</Box>
-              Выбрано тегов: <Box component="span" sx={{ fontWeight: 600 }}>{selectedTags.length}</Box>
+              Выбрано тегов: <Box component="span" sx={{ fontWeight: 600, color: MAIN_COLOR }}>{selectedTags.length}</Box>
             </Box>
           )}
         </Typography>
@@ -180,6 +215,12 @@ const TourExplorer: React.FC = () => {
             sx={{
               '& .MuiOutlinedInput-root': {
                 borderRadius: { xs: 1, sm: 2 }
+              },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: MAIN_COLOR
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: MAIN_COLOR
               }
             }}
           />
@@ -190,7 +231,13 @@ const TourExplorer: React.FC = () => {
             onChange={(_, newValue) => setSelectedTags(newValue)}
             disableCloseOnSelect
             sx={{
-              minWidth: { xs: '100%', md: '40%' }
+              minWidth: { xs: '100%', md: '40%' },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: MAIN_COLOR
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: MAIN_COLOR
+              }
             }}
             renderInput={(params) => (
               <TextField
@@ -212,7 +259,7 @@ const TourExplorer: React.FC = () => {
                   label={tag}
                   size="small"
                   sx={{
-                    backgroundColor: 'primary.main',
+                    backgroundColor: MAIN_COLOR,
                     color: 'white',
                     borderRadius: 1.5,
                     fontSize: {
@@ -235,7 +282,7 @@ const TourExplorer: React.FC = () => {
                       }
                     },
                     '&:hover': {
-                      backgroundColor: 'primary.dark'
+                      backgroundColor: '#2980b9'
                     }
                   }}
                 />
@@ -255,7 +302,8 @@ const TourExplorer: React.FC = () => {
             fontSize: {
               xs: '1.1rem',
               sm: '1.25rem'
-            }
+            },
+            color: MAIN_COLOR
           }}
         >
           Места не найдены. Попробуйте изменить параметры поиска.
@@ -292,7 +340,7 @@ const TourExplorer: React.FC = () => {
                 '&:hover': {
                   boxShadow: 6,
                   transform: 'translateY(-4px)',
-                  borderColor: 'primary.main'
+                  borderColor: MAIN_COLOR
                 }
               }}
             >
@@ -335,7 +383,8 @@ const TourExplorer: React.FC = () => {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                     overflow: 'hidden',
-                    lineHeight: 1.3
+                    lineHeight: 1.3,
+                    color: MAIN_COLOR
                   }}
                 >
                   {tour.title}
@@ -379,6 +428,13 @@ const TourExplorer: React.FC = () => {
                 fontSize: {
                   xs: '0.875rem',
                   sm: '1rem'
+                }
+              },
+              '& .MuiPaginationItem-root.Mui-selected': {
+                backgroundColor: MAIN_COLOR,
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: '#2980b9'
                 }
               }
             }}

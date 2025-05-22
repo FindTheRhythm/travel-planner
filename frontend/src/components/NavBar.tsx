@@ -80,10 +80,10 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
           px: 3,
           position: 'relative',
           transition: 'all 0.2s ease-in-out',
-          backgroundColor: isActive(to) ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-          borderBottom: isActive(to) ? '3px solid #fff' : '3px solid transparent',
+          backgroundColor: isActive(to) ? 'rgba(52, 152, 219, 0.3)' : 'transparent',
+          borderBottom: isActive(to) ? '3px solid #3498db' : '3px solid transparent',
           '&:hover': {
-            backgroundColor: isActive(to) ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'
+            backgroundColor: isActive(to) ? 'rgba(52, 152, 219, 0.4)' : 'rgba(52, 152, 219, 0.2)'
           }
         }}
       >
@@ -96,7 +96,7 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
     <AppBar 
       position="fixed" 
       sx={{ 
-        backgroundColor: '#1565c0',
+        backgroundColor: '#2c3e50',
         left: '50%',
         transform: 'translateX(-50%)',
         maxWidth: '1600px',
@@ -148,6 +148,7 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
               color: 'inherit'
             }
           }}
+          className="text-title"
         >
           Планировщик Путешествий
         </Typography>
@@ -168,128 +169,126 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
             </Typography>
           </NavButton>
           {user ? (
-            <>
-              <Box
-                sx={{
-                  position: 'relative',
+            <Box
+              sx={{
+                position: 'relative',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                mr: 0
+              }}
+            >
+              <Button
+                onClick={handleMenuOpen}
+                aria-haspopup="true"
+                aria-expanded={Boolean(anchorEl)}
+                aria-controls={Boolean(anchorEl) ? 'user-menu' : undefined}
+                sx={{ 
                   height: '100%',
-                  display: 'flex',
+                  minHeight: { xs: 68, sm: 77 },
+                  borderRadius: 0,
+                  px: { xs: 1.2, sm: 2.4, md: 3.6 },
+                  position: 'relative',
+                  transition: 'all 0.2s ease-in-out',
+                  backgroundColor: Boolean(anchorEl) ? 'rgba(52, 152, 219, 0.3)' : 'transparent',
+                  borderBottom: Boolean(anchorEl) ? '3px solid #3498db' : '3px solid transparent',
+                  color: 'white',
+                  display: 'grid',
+                  gridTemplateColumns: 'auto auto',
                   alignItems: 'center',
-                  mr: -3
+                  justifyContent: 'start',
+                  columnGap: '10px',
+                  textTransform: 'none',
+                  borderTopRightRadius: { xs: 0, sm: '12px' },
+                  '&:hover': {
+                    backgroundColor: Boolean(anchorEl) ? 'rgba(52, 152, 219, 0.4)' : 'rgba(52, 152, 219, 0.2)'
+                  }
                 }}
               >
-                <Button
-                  onClick={handleMenuOpen}
-                  aria-haspopup="true"
-                  aria-expanded={Boolean(anchorEl)}
-                  aria-controls={Boolean(anchorEl) ? 'user-menu' : undefined}
-                  sx={{ 
-                    height: '100%',
-                    minHeight: { xs: 68, sm: 77 },
-                    borderRadius: 0,
-                    px: { xs: 1.2, sm: 2.4, md: 3.6 },
-                    position: 'relative',
-                    transition: 'all 0.2s ease-in-out',
-                    backgroundColor: Boolean(anchorEl) ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-                    borderBottom: Boolean(anchorEl) ? '3px solid #fff' : '3px solid transparent',
-                    color: 'white',
-                    display: 'grid',
-                    gridTemplateColumns: 'auto auto',
-                    alignItems: 'center',
-                    justifyContent: 'start',
-                    columnGap: '10px',
-                    textTransform: 'none',
-                    borderTopRightRadius: { xs: 0, sm: '12px' },
-                    '&:hover': {
-                      backgroundColor: Boolean(anchorEl) ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'
-                    }
-                  }}
-                >
-                  {user.avatar ? (
-                    <Avatar
-                      src={`${API_BASE_URL}/uploads/avatars/${user.avatar}`}
-                      alt={`Аватар пользователя ${user.username}`}
-                      sx={{
-                        width: { xs: 34, sm: 38 },
-                        height: { xs: 34, sm: 38 },
-                        border: '1px solid white',
-                        display: 'flex',
-                        alignSelf: 'center'
-                      }}
-                    />
-                  ) : (
-                    <PersonIcon 
-                      aria-hidden="true"
-                      sx={{ 
-                        color: 'transparent',
-                        stroke: 'white',
-                        strokeWidth: 1,
-                        fontSize: { xs: 29, sm: 34 },
-                        display: 'flex',
-                        alignSelf: 'center'
-                      }} 
-                    />
-                  )}
-                  <Typography 
-                    sx={{ 
-                      display: { xs: 'none', sm: 'block' },
-                      fontWeight: 500,
-                      maxWidth: { sm: '120px', md: '200px' },
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      alignSelf: 'center',
-                      textAlign: 'center',
-                      pr: { sm: 2.25, md: 3 }
+                {user.avatar ? (
+                  <Avatar
+                    src={`${API_BASE_URL}/uploads/avatars/${user.avatar}`}
+                    alt={`Аватар пользователя ${user.username}`}
+                    sx={{
+                      width: { xs: 34, sm: 38 },
+                      height: { xs: 34, sm: 38 },
+                      border: '1px solid white',
+                      display: 'flex',
+                      alignSelf: 'center'
                     }}
-                  >
-                    {user.username}
-                  </Typography>
-                </Button>
-                <Menu
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={handleMenuClose}
-                  onClick={handleMenuClose}
+                  />
+                ) : (
+                  <PersonIcon 
+                    aria-hidden="true"
+                    sx={{ 
+                      color: 'transparent',
+                      stroke: 'white',
+                      strokeWidth: 1,
+                      fontSize: { xs: 29, sm: 34 },
+                      display: 'flex',
+                      alignSelf: 'center'
+                    }} 
+                  />
+                )}
+                <Typography
                   sx={{
-                    '& .MuiPaper-root': {
-                      borderRadius: '8px',
-                      minWidth: 180,
-                      boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                      mt: 1
-                    }
-                  }}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  slotProps={{
-                    paper: {
-                      style: { position: 'fixed' }
-                    }
-                  }}
-                  style={{ position: 'fixed' }}
-                  disableScrollLock={true}
-                  MenuListProps={{
-                    sx: { py: 0.5 }
+                    display: { xs: 'none', sm: 'block' },
+                    fontWeight: 500,
+                    maxWidth: { sm: '120px', md: '200px' },
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    alignSelf: 'center',
+                    textAlign: 'center',
+                    pr: { sm: 2.25, md: 3 }
                   }}
                 >
-                  <MenuItem 
-                    component={Link} 
-                    to="/profile"
-                  >
-                    Личный кабинет
-                  </MenuItem>
-                  <MenuItem onClick={handleLogoutClick}>
-                    Выйти
-                  </MenuItem>
-                </Menu>
-              </Box>
-            </>
+                  {user.username}
+                </Typography>
+              </Button>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                onClick={handleMenuClose}
+                sx={{
+                  '& .MuiPaper-root': {
+                    borderRadius: '8px',
+                    minWidth: 180,
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                    mt: 1
+                  }
+                }}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                slotProps={{
+                  paper: {
+                    style: { position: 'fixed' }
+                  }
+                }}
+                style={{ position: 'fixed' }}
+                disableScrollLock={true}
+                MenuListProps={{
+                  sx: { py: 0.5 }
+                }}
+              >
+                <MenuItem 
+                  component={Link} 
+                  to="/profile"
+                >
+                  Личный кабинет
+                </MenuItem>
+                <MenuItem onClick={handleLogoutClick}>
+                  Выйти
+                </MenuItem>
+              </Menu>
+            </Box>
           ) : (
             <Box
               sx={{
@@ -308,11 +307,11 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
                   px: 3,
                   position: 'relative',
                   transition: 'all 0.2s ease-in-out',
-                  backgroundColor: isActive('/login') ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-                  borderBottom: isActive('/login') ? '3px solid #fff' : '3px solid transparent',
+                  backgroundColor: isActive('/login') ? 'rgba(52, 152, 219, 0.3)' : 'transparent',
+                  borderBottom: isActive('/login') ? '3px solid #3498db' : '3px solid transparent',
                   color: 'white',
                   '&:hover': {
-                    backgroundColor: isActive('/login') ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'
+                    backgroundColor: isActive('/login') ? 'rgba(52, 152, 219, 0.4)' : 'rgba(52, 152, 219, 0.2)'
                   }
                 }}
               >

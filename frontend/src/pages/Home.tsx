@@ -9,8 +9,14 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import TravelTipsCarousel from '../components/TravelTipsCarousel';
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
+import TagChip from '../components/TagChip';
 import { API_BASE_URL } from '../config';
+
+// Константы для цветов в соответствии с NavBar
+const MAIN_COLOR = '#2c3e50';
 
 interface Travel {
   id: number;
@@ -36,33 +42,6 @@ const Home: React.FC = () => {
     event.stopPropagation(); // Предотвращаем переход на страницу тура
     navigate(`/travels/explore?tag=${encodeURIComponent(tag)}`);
   };
-
-  const renderTourTags = (tourTags: string[]) => (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-      {tourTags.map((tag) => (
-        <Chip
-          key={tag}
-          label={tag}
-          size="small"
-          onClick={(e) => handleTagClick(tag, e)}
-          sx={{
-            backgroundColor: 'grey.100',
-            color: 'text.primary',
-            borderRadius: 1.5,
-            cursor: 'pointer',
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
-              transform: 'scale(1.05)',
-              backgroundColor: 'grey.200',
-            },
-            '&:active': {
-              transform: 'scale(0.95)',
-            }
-          }}
-        />
-      ))}
-    </Box>
-  );
 
   // Подгружаем популярные туры с сервера
   useEffect(() => {
@@ -112,24 +91,58 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <Typography 
-        variant="h3" 
+      <Box 
         sx={{ 
-          margin: '20px 0',
-          fontSize: {
-            xs: '1.3rem',
-            sm: '1.8rem',
-            md: '2.2rem',
-            lg: '2.0rem'
-          },
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          textAlign: 'center'
+          position: 'relative',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          mb: 4,
+          mt: 3
         }}
       >
-        Здесь располагается случайная подборка популярных мест со всего мира
-      </Typography>
+        <Divider sx={{ 
+          position: 'absolute', 
+          width: '100%', 
+          borderColor: `rgba(52, 152, 219, 0.3)`
+        }} />
+        
+        <Box sx={{ 
+          backgroundColor: '#fff',
+          px: 3,
+          position: 'relative',
+          zIndex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2
+        }}>
+          <TravelExploreIcon 
+            sx={{ 
+              fontSize: { xs: '2rem', sm: '2.5rem' }, 
+              color: MAIN_COLOR 
+            }} 
+          />
+          <Typography 
+            variant="h4" 
+            component="h1"
+            sx={{ 
+              fontSize: {
+                xs: '1.3rem',
+                sm: '1.8rem',
+                md: '2.2rem',
+                lg: '2.4rem'
+              },
+              textAlign: 'center',
+              fontWeight: 600,
+              color: MAIN_COLOR
+            }}
+          >
+            Популярные туристические места
+          </Typography>
+        </Box>
+      </Box>
+
       <Grid container spacing={3}>
         {popularTravels.slice(0, visibleCount).map((travel) => (
           <Grid item xs={12} key={travel.id}>
@@ -145,7 +158,7 @@ const Home: React.FC = () => {
                 boxShadow: 6,
                 transform: 'translateY(-2px)',
                 transition: 'all 0.2s ease-in-out',
-                borderColor: 'primary.main'
+                borderColor: MAIN_COLOR
               }
             }}
             onClick={() => navigate(`/travels/${travel.id}`)}
@@ -178,7 +191,7 @@ const Home: React.FC = () => {
                 flexDirection: 'column',
                 gap: 1
               }}>
-                <Typography variant="h6" component="h2">
+                <Typography variant="h6" component="h2" sx={{ color: MAIN_COLOR }}>
                   {travel.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
@@ -186,25 +199,10 @@ const Home: React.FC = () => {
                 </Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                   {(travel.tags || []).map((tag) => (
-                    <Chip
+                    <TagChip
                       key={tag}
-                      label={tag}
-                      size="small"
-                      onClick={(e) => handleTagClick(tag, e)}
-                      sx={{
-                        backgroundColor: 'grey.100',
-                        color: 'text.primary',
-                        borderRadius: 1.5,
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease-in-out',
-                        '&:hover': {
-                          transform: 'scale(1.05)',
-                          backgroundColor: 'grey.200',
-                        },
-                        '&:active': {
-                          transform: 'scale(0.95)',
-                        }
-                      }}
+                      tag={tag}
+                      onClick={handleTagClick}
                     />
                   ))}
                 </Box>
@@ -220,13 +218,72 @@ const Home: React.FC = () => {
             variant="outlined" 
             onClick={handleShowMore}
             size="large"
+            sx={{
+              borderColor: MAIN_COLOR,
+              color: MAIN_COLOR,
+              '&:hover': {
+                borderColor: '#2980b9',
+                backgroundColor: 'rgba(52, 152, 219, 0.08)'
+              }
+            }}
           >
             Показать еще
           </Button>
         </Box>
       )}
 
-      <Typography variant="h4" style={{ margin: '40px 0', textAlign: 'center' }}>А здесь вы можете посмотреть советы для путешественников</Typography>
+      <Box 
+        sx={{ 
+          position: 'relative',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          mb: 4,
+          mt: 5
+        }}
+      >
+        <Divider sx={{ 
+          position: 'absolute', 
+          width: '100%', 
+          borderColor: `rgba(52, 152, 219, 0.3)`
+        }} />
+        
+        <Box sx={{ 
+          backgroundColor: '#fff',
+          px: 3,
+          position: 'relative',
+          zIndex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2
+        }}>
+          <TipsAndUpdatesIcon 
+            sx={{ 
+              fontSize: { xs: '2rem', sm: '2.5rem' }, 
+              color: MAIN_COLOR 
+            }} 
+          />
+          <Typography 
+            variant="h4" 
+            component="h2"
+            sx={{ 
+              fontSize: {
+                xs: '1.3rem',
+                sm: '1.8rem',
+                md: '2.2rem',
+                lg: '2.4rem'
+              },
+              textAlign: 'center',
+              fontWeight: 600,
+              color: MAIN_COLOR
+            }}
+          >
+            Советы для путешественников
+          </Typography>
+        </Box>
+      </Box>
+      
       {tips.length > 0 && <TravelTipsCarousel tips={tips} />}
     </Container>
   );
