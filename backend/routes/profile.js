@@ -151,16 +151,27 @@ router.post('/updateAvatar', upload.single('avatar'), async (req, res) => {
     const userIndex = users.findIndex(u => u.id === userId);
 
     if (userIndex === -1) {
-      // Удаляем загруженный файл
-      fs.unlinkSync(req.file.path);
+      // Удаляем загруженный файл безопасно
+      try {
+        if (fs.existsSync(req.file.path)) {
+          fs.unlinkSync(req.file.path);
+        }
+      } catch (err) {
+        console.log(`Не удалось удалить файл ${req.file.path}: ${err.message}`);
+      }
       return res.status(404).json({ error: 'Пользователь не найден' });
     }
 
     // Удаляем старый аватар, если он существует
     if (users[userIndex].avatar) {
       const oldAvatarPath = path.join(__dirname, '../uploads/avatars', users[userIndex].avatar);
-      if (fs.existsSync(oldAvatarPath)) {
-        fs.unlinkSync(oldAvatarPath);
+      try {
+        if (fs.existsSync(oldAvatarPath)) {
+          fs.unlinkSync(oldAvatarPath);
+        }
+      } catch (err) {
+        console.log(`Не удалось удалить старый аватар ${oldAvatarPath}: ${err.message}`);
+        // Продолжаем выполнение, даже если не удалось удалить старый файл
       }
     }
 
@@ -176,8 +187,15 @@ router.post('/updateAvatar', upload.single('avatar'), async (req, res) => {
       .webp({ quality: 80 })
       .toFile(processedFilePath);
 
-    // Удаляем оригинальный файл
-    fs.unlinkSync(req.file.path);
+    // Удаляем оригинальный файл безопасно
+    try {
+      if (fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
+    } catch (err) {
+      console.log(`Не удалось удалить оригинальный файл ${req.file.path}: ${err.message}`);
+      // Продолжаем выполнение, даже если не удалось удалить оригинальный файл
+    }
 
     // Обновляем путь к аватару
     users[userIndex].avatar = processedFileName;
@@ -187,9 +205,15 @@ router.post('/updateAvatar', upload.single('avatar'), async (req, res) => {
       avatar: processedFileName
     });
   } catch (error) {
-    // В случае ошибки удаляем загруженный файл
-    if (req.file && fs.existsSync(req.file.path)) {
-      fs.unlinkSync(req.file.path);
+    // В случае ошибки удаляем загруженный файл безопасно
+    if (req.file) {
+      try {
+        if (fs.existsSync(req.file.path)) {
+          fs.unlinkSync(req.file.path);
+        }
+      } catch (err) {
+        console.log(`Не удалось удалить файл при ошибке ${req.file.path}: ${err.message}`);
+      }
     }
     
     console.error('Error updating avatar:', error);
