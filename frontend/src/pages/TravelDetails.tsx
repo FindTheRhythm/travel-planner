@@ -32,6 +32,10 @@ import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { API_BASE_URL } from '../config';
+import WeatherWidget from '../components/WeatherWidget';
+import CurrencyWidget from '../components/CurrencyWidget';
+import MapWidget from '../components/MapWidget';
+import ImageWithFallback from '../components/ImageWithFallback';
 
 interface Travel {
   id: number;
@@ -334,17 +338,24 @@ const TravelDetails: React.FC = () => {
 
     if (cityName) {
       fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(cityName)}&units=metric&appid=${API_KEY}`)
-        .then(res => res.json())
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Weather API error');
+          }
+          return res.json();
+        })
         .then(data => {
-          if (data?.main && Array.isArray(data.weather)) {
+          if (data?.main && Array.isArray(data.weather) && data.weather.length > 0) {
             setWeather(data);
+            setWeatherError(false);
           } else {
-            throw new Error('Неверная структура ответа от OpenWeather');
+            throw new Error('Invalid weather data structure');
           }
         })
         .catch(err => {
           console.error('Ошибка загрузки погоды:', err);
           setWeatherError(true);
+          setWeather(null);
         });
     }
   }, [travel, details]);
@@ -516,14 +527,23 @@ const TravelDetails: React.FC = () => {
       <Typography sx={{ mt: 2 }}>{details.thirdDescription}</Typography>
 
       {/* Погода */}
-      <Typography variant="h6" sx={{ mt: 4 }}>Погода сейчас</Typography>
-      {weather ? (
-        <Typography>Температура: {weather.main.temp}°C, {weather.weather[0].description}</Typography>
-      ) : weatherError ? (
-        <Typography color="error">Ошибка загрузки погоды</Typography>
-      ) : (
-        <Typography>Загрузка...</Typography>
-      )}
+      <Box sx={{ mt: 4 }}>
+        <WeatherWidget 
+          weather={weather?.main && weather?.weather ? weather : null}
+          isLoading={!weather && !weatherError}
+          error={weatherError}
+        />
+      </Box>
+
+      {/* Конвертер валют */}
+      <Box sx={{ mt: 4 }}>
+        <CurrencyWidget destinationCity={details.name} />
+      </Box>
+
+      {/* Карта */}
+      <Box sx={{ mt: 4 }}>
+        <MapWidget cityName={details.name} />
+      </Box>
 
       {/* Достопримечательности */}
       <Typography variant="h6" sx={{ mt: 4, mb: 2 }} className="text-title">Популярные туристические места</Typography>
