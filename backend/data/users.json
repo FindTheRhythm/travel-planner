@@ -19,14 +19,6 @@
     "password": "123"
   },
   {
-    "id": 7,
-    "username": "Danila_Shurupov",
-    "email": "dshurik618@gmail.com",
-    "password": "123456",
-    "avatar": "1748615029925-313635331.webp",
-    "tours": []
-  },
-  {
     "id": 8,
     "username": "qwwerty",
     "email": "dshurik123@gmail.com",
@@ -38,6 +30,13 @@
     "username": "user",
     "email": "user@email.ru",
     "password": "123",
+    "avatar": null
+  },
+  {
+    "id": 10,
+    "username": "Danila",
+    "email": "dshurik618@gmail.com",
+    "password": "123456",
     "avatar": null
   }
 ]

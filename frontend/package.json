@@ -7,7 +7,11 @@
         "build": "webpack --mode production",
         "lint": "eslint . --ext .ts,.tsx",
         "lint:fix": "eslint . --ext .ts,.tsx --fix",
-        "format": "prettier --write \"**/*.{ts,tsx,css,json}\""
+        "format": "prettier --write \"**/*.{ts,tsx,css,json}\"",
+        "cy:open": "cypress open",
+        "cy:run": "cypress run",
+        "test:e2e": "start-server-and-test start http://localhost:3000 cy:run",
+        "test:e2e:open": "start-server-and-test start http://localhost:3000 cy:open"
     },
     "dependencies": {
         "@emotion/react": "11.11.3",
@@ -33,6 +37,7 @@
         "@typescript-eslint/eslint-plugin": "6.19.1",
         "@typescript-eslint/parser": "6.19.1",
         "css-loader": "6.9.1",
+        "cypress": "^14.4.0",
         "eslint": "8.56.0",
         "eslint-config-prettier": "9.1.0",
         "eslint-plugin-prettier": "5.1.3",

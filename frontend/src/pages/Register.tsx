@@ -141,6 +141,9 @@ const Register: React.FC = () => {
                     onChange={e => setEmail(e.target.value)} 
                     fullWidth 
                     required
+                    inputProps={{
+                      'data-cy': 'email-input'
+                    }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -165,6 +168,9 @@ const Register: React.FC = () => {
                     onChange={e => setUsername(e.target.value)} 
                     fullWidth 
                     required
+                    inputProps={{
+                      'data-cy': 'username-input'
+                    }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -190,6 +196,9 @@ const Register: React.FC = () => {
                     onChange={e => setPassword(e.target.value)} 
                     fullWidth 
                     required
+                    inputProps={{
+                      'data-cy': 'password-input'
+                    }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -215,6 +224,9 @@ const Register: React.FC = () => {
                     onChange={e => setConfirm(e.target.value)} 
                     fullWidth 
                     required
+                    inputProps={{
+                      'data-cy': 'confirm-password-input'
+                    }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -239,6 +251,7 @@ const Register: React.FC = () => {
                 variant="contained" 
                 fullWidth
                 size="large"
+                data-cy="register-button"
                 sx={{ 
                   mt: 3, 
                   mb: 2,
@@ -267,6 +280,7 @@ const Register: React.FC = () => {
                     textDecoration: 'none',
                     fontWeight: 500
                   }}
+                  data-cy="login-link"
                 >
                   Войти
                 </Link>

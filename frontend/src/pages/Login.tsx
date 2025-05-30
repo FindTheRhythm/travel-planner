@@ -148,6 +148,9 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
                     onChange={e => setEmail(e.target.value)} 
                     fullWidth 
                     required
+                    inputProps={{
+                      'data-cy': 'email-input'
+                    }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -173,6 +176,9 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
                     onChange={e => setPassword(e.target.value)} 
                     fullWidth 
                     required
+                    inputProps={{
+                      'data-cy': 'password-input'
+                    }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -197,6 +203,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
                 variant="contained" 
                 fullWidth
                 size="large"
+                data-cy="login-button"
                 sx={{ 
                   mt: 3, 
                   mb: 2,
@@ -225,6 +232,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
                     textDecoration: 'none',
                     fontWeight: 500
                   }}
+                  data-cy="register-link"
                 >
                   Зарегистрироваться
                 </Link>
@@ -249,6 +257,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
           severity={message?.type}
           variant="filled"
           elevation={6}
+          data-cy="error-message"
           sx={{ 
             width: '100%',
             boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)',
