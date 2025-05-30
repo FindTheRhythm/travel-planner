@@ -45,133 +45,133 @@
     "id": 107, 
     "title": "Стамбул, Турция", 
     "description": "Ночи Рамадана и бриз Босфора",
-    "image": "/images/istanbul/istanbul1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/7ba/0b7/stambul_1.jpg",
     "tags": ["Культура", "Гастрономия", "История", "Базары", "Море", "Религия"]
   },
   { 
     "id": 108, 
     "title": "Киото, Япония", 
     "description": "Цветение сакуры в разгаре",
-    "image": "/images/kyoto/kyoto1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/cb9/2b7/khram-inari_83.jpg",
     "tags": ["Природа", "Культура", "Традиции", "Храмы", "Сады", "Фотография"]
   },
   { 
     "id": 109, 
     "title": "Санкт-Петербург, Россия", 
     "description": "Фестиваль Белых ночей",
-    "image": "/images/saint-petersburg/saint-petersburg1.jpg",
+    "image": "https://wikiway.com/upload/uf/dad/lprnehnqh9bv7f0zqscjcy27h43gxbqt/Spas_na_Krovi.jpg",
     "tags": ["Культура", "Фестивали", "История", "Музеи", "Архитектура", "Белые ночи"]
   },
   { 
     "id": 110, 
     "title": "Нью-Йорк, США", 
     "description": "Осенняя листва и атмосфера Дня благодарения",
-    "image": "/images/new-york/new-york1.jpg",
+    "image": "https://wikiway.com/upload/iblock/421/2-new-york-central-park.jpg",
     "tags": ["Городской отдых", "Шоппинг", "Культура", "Парки", "Небоскребы", "Развлечения"]
   },
   { 
     "id": 111, 
     "title": "Прага, Чехия", 
     "description": "Сказочные рождественские ярмарки",
-    "image": "/images/prague/prague1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/eb5/e3b/praga_1.jpg",
     "tags": ["Рождество", "История", "Архитектура", "Ярмарки", "Готика", "Гастрономия"]
   },
   { 
     "id": 112, 
     "title": "Сингапур", 
     "description": "Празднование Китайского нового года",
-    "image": "/images/singapore/singapore1.jpg",
+    "image": "https://wikiway.com/upload/iblock/5c4/2-marina-bay.jpg",
     "tags": ["Праздники", "Культура", "Городской отдых", "Небоскребы", "Гастрономия", "Шоппинг"]
   },
   { 
     "id": 113, 
     "title": "Амстердам, Нидерланды", 
-    "description": "Цветение тюльпанов и празднование Дня короля",
-    "image": "/images/amsterdam/amsterdam1.jpg",
+    "description": "Фестивали и активный отдых",
+    "image": "https://wikiway.com/upload/hl-photo/4b7/d3f/amsterdam_3.jpg",
     "tags": ["Природа", "Фестивали", "Культура", "Велосипеды", "Каналы", "Цветы"]
   },
   { 
     "id": 114, 
     "title": "Брюгге, Бельгия", 
     "description": "Романтические каналы весной",
-    "image": "/images/bruges/bruges1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/0a7/8cf/brugge_3.jpg",
     "tags": ["Романтика", "История", "Архитектура", "Каналы", "Средневековье", "Шоколад"]
   },
   { 
     "id": 115, 
-    "title": "Кольмар, Франция", 
-    "description": "Винные фестивали и средневековые улочки",
-    "image": "/images/colmar/colmar1.jpg",
-    "tags": ["Вино", "История", "Культура", "Фахверк", "Гастрономия", "Эльзас"]
+    "title": "Марсель, Франция", 
+    "description": "Винные фестивали и бриз моря",
+    "image": "https://wikiway.com/upload/hl-photo/c8e/b5b/marsel_1.jpg",
+    "tags": ["Вино", "История", "Культура", "Море", "Гастрономия", "Пляж"]
   },
   { 
     "id": 116, 
     "title": "Вена, Австрия", 
     "description": "Новогодние концерты и имперское очарование",
-    "image": "/images/vienna/vienna1.jpg",
+    "image": "https://wikiway.com/upload/iblock/aa9/2-ulitsa-graben.jpg",
     "tags": ["Музыка", "История", "Архитектура", "Классика", "Кофейни", "Дворцы"]
   },
   { 
     "id": 117, 
     "title": "Эдинбург, Шотландия", 
     "description": "Сезон фестиваля искусств Fringe",
-    "image": "/images/edinburgh/edinburgh1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/23d/f0a/edinburg_9.jpg",
     "tags": ["Искусство", "Фестивали", "Культура", "Замки", "Театр", "История"]
   },
   { 
     "id": 118, 
     "title": "Будапешт, Венгрия", 
     "description": "Термальные купальни и огни Дуная",
-    "image": "/images/budapest/budapest1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/03d/6bb/budapesht_3.jpg",
     "tags": ["СПА", "История", "Романтика", "Купальни", "Архитектура", "Дунай"]
   },
   { 
     "id": 119, 
     "title": "Копенгаген, Дания", 
     "description": "Уютные праздничные огни в парке Тиволи",
-    "image": "/images/copenhagen/copenhagen1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/ec3/842/kopengagen_2.jpg",
     "tags": ["Развлечения", "Праздники", "Городской отдых", "Дизайн", "Гастрономия", "Парки"]
   },
   { 
     "id": 120, 
     "title": "Мюнхен, Германия", 
     "description": "Октоберфест и баварская культура",
-    "image": "/images/munich/munich1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/1ec/6af/munhen_5.jpg",
     "tags": ["Фестивали", "Культура", "Гастрономия", "Пиво", "Замки", "Традиции"]
   },
   { 
     "id": 121, 
     "title": "Рио-де-Жанейро, Бразилия", 
     "description": "Карнавальное великолепие",
-    "image": "/images/rio-de-janeiro/rio-de-janeiro1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/2f4/1b0/rio_1.jpg",
     "tags": ["Карнавал", "Пляж", "Развлечения", "Самба", "Музыка", "Природа"]
   },
   { 
     "id": 122, 
     "title": "Буэнос-Айрес, Аргентина", 
     "description": "Весенние ночи танго",
-    "image": "/images/buenos-aires/buenos-aires1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/d19/551/buenos-ayres_128.jpg",
     "tags": ["Танцы", "Культура", "Ночная жизнь", "Танго", "Архитектура", "Гастрономия"]
   },
   { 
     "id": 123, 
     "title": "Сидней, Австралия", 
     "description": "Новогодний фейерверк в гавани",
-    "image": "/images/sydney/sydney1.jpg",
+    "image": "https://wikiway.com/upload/home/t/tema389/smileplanet.ru/public_html/upload/hl-photo/5d0/sidney_1.jpg/6e6/sidney_1.jpg",
     "tags": ["Праздники", "Городской отдых", "Пляж", "Опера", "Мосты", "Природа"]
   },
   { 
     "id": 124, 
     "title": "Стокгольм, Швеция", 
     "description": "Традиции середины лета и белые ночи",
-    "image": "/images/stockholm/stockholm1.jpg",
+    "image": "https://wikiway.com/upload/hl-photo/fa3/cef/stokgolm_3.jpg",
     "tags": ["Природа", "Традиции", "Культура", "Дизайн", "Острова", "Музеи"]
   },
   {
     "id": 125, 
     "title": "Несуществующий город", 
     "description": "Ложное описание",
-    "image": "/images/notfound.jpg",
+    "image": "/images/notfound.jpeg",
     "tags": ["Это", "Ложное", "теги"]
   }
 
