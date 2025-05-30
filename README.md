@@ -65,4 +65,4 @@ npx cypress open
 
 ## Автор
 
-Danila Shurupov
+Danila FindTheRhythm
