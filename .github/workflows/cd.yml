@@ -25,21 +25,3 @@ jobs:
       run: |
         npm run build
         
-    # Здесь можно добавить шаги для деплоя
-    # Например, деплой на Vercel для frontend:
-    # - name: Deploy Frontend to Vercel
-    #   uses: amondnet/vercel-action@v20
-    #   with:
-    #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
-    #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-    #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-    #     vercel-args: '--prod'
-    
-    # И деплой на Heroku для backend:
-    # - name: Deploy Backend to Heroku
-    #   uses: akhileshns/heroku-deploy@v3.12.12
-    #   with:
-    #     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-    #     heroku_app_name: "your-app-name"
-    #     heroku_email: "your-email@example.com"
-    #     appdir: "backend" 
