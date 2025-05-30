@@ -294,7 +294,16 @@
     ],
     "hotels": "https://travel.yandex.ru/hotels/moscow/",
     "flights": "https://travel.yandex.ru/flights/cities/moscow/",
-    "comments": []
+    "comments": [
+      {
+        "id": 1748605552006,
+        "userId": 7,
+        "username": "Danila_Shurupov",
+        "text": "Отличный город!!",
+        "rating": 5,
+        "date": "2025-05-30T11:45:52.006Z"
+      }
+    ]
   },
   {
     "id": 104,
@@ -577,7 +586,17 @@
       }
     ],
     "hotels": "https://travel.yandex.ru/hotels/london-gb/",
-    "flights": "https://travel.yandex.ru/flights/cities/london-gb/"
+    "flights": "https://travel.yandex.ru/flights/cities/london-gb/",
+    "comments": [
+      {
+        "id": 1748605581941,
+        "userId": 7,
+        "username": "Danila_Shurupov",
+        "text": "Интересный город!",
+        "rating": 4,
+        "date": "2025-05-30T11:46:21.941Z"
+      }
+    ]
   },
   {
     "id": 107,

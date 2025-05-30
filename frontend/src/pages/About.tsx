@@ -113,7 +113,7 @@ const About: React.FC = () => (
               </Typography>
             </Box>
             <Typography variant="body1">
-              Это приложение для планирования путешествий, разработанное с использованием современных технологий:
+              Веб-приложение для поиска и планирования путешествий, разработанное с использованием:
             </Typography>
             <Box
               component="ul"
@@ -138,10 +138,14 @@ const About: React.FC = () => (
                 }
               }}
             >
-              <li>React и TypeScript</li>
-              <li>Material UI для дизайна</li>
-              <li>Node.js и Express для бэкенда</li>
-              <li>PostgreSQL для базы данных</li>
+              <li>React + TypeScript для фронтенда</li>
+              <li>Node.js + Express для бэкенда</li>
+              <li>Дизайн с помощью Material UI и CSS</li>
+              <li>Использование API для получения данных о погоде, курсе валют и карт мест</li>
+              <li>Упрощенная система хранения данных на основе JSON</li>
+              <li>Интеграция с сервисами для получения данных об отелях и авиабилетах</li>
+
+
             </Box>
           </Paper>
         </Grid>
@@ -179,7 +183,7 @@ const About: React.FC = () => (
               </Typography>
             </Box>
             <Typography variant="body1">
-              Проект разработан студентом 2 курса университета РТУ МИРЭА.
+              Проект с открытым исходным кодом, демонстрирующий современные подходы к веб-разработке.
             </Typography>
             <Box 
               sx={{ 
@@ -192,7 +196,7 @@ const About: React.FC = () => (
               }}
             >
               <Link 
-                href="https://github.com/FindTheRhythm" 
+                href="https://github.com" 
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
@@ -214,7 +218,7 @@ const About: React.FC = () => (
                 GitHub
               </Link>
               <Link 
-                href="https://t.me/Find_The_Rhythm" 
+                href="https://t.me" 
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
@@ -236,7 +240,7 @@ const About: React.FC = () => (
                 Telegram
               </Link>
               <Link 
-                href="mailto:example@mail.ru" 
+                href="mailto:contact@example.com" 
                 sx={{
                   textDecoration: 'none',
                   display: 'flex',
@@ -288,11 +292,11 @@ const About: React.FC = () => (
                 <FlightIcon sx={{ color: '#fff' }} />
               </Avatar>
               <Typography variant="h6" component="h2" sx={{ color: MAIN_COLOR, fontWeight: 600 }}>
-                Возможности
+                Функциональность
               </Typography>
             </Box>
             <Typography variant="body1">
-              С помощью этого приложения вы можете:
+              Основные возможности приложения:
             </Typography>
             <Box
               component="ul"
@@ -314,7 +318,7 @@ const About: React.FC = () => (
                 }
               }}>
                 <PlaceIcon sx={{ color: MAIN_COLOR }} />
-                <Typography>Искать интересные места для посещения</Typography>
+                <Typography>Просмотр популярных туристических мест</Typography>
               </Box>
               <Box component="li" sx={{ 
                 display: 'flex', 
@@ -326,7 +330,7 @@ const About: React.FC = () => (
                 }
               }}>
                 <BookmarkIcon sx={{ color: MAIN_COLOR }} />
-                <Typography>Сохранять понравившиеся туры</Typography>
+                <Typography>Сохранение интересных мест в профиле</Typography>
               </Box>
               <Box component="li" sx={{ 
                 display: 'flex', 
@@ -338,7 +342,7 @@ const About: React.FC = () => (
                 }
               }}>
                 <EditCalendarIcon sx={{ color: MAIN_COLOR }} />
-                <Typography>Планировать свои путешествия</Typography>
+                <Typography>Просмотр погоды и курса валют</Typography>
               </Box>
               <Box component="li" sx={{ 
                 display: 'flex', 
@@ -350,7 +354,7 @@ const About: React.FC = () => (
                 }
               }}>
                 <ShareIcon sx={{ color: MAIN_COLOR }} />
-                <Typography>Делиться опытом с другими путешественниками</Typography>
+                <Typography>Комментарии и оценки мест</Typography>
               </Box>
             </Box>
           </Paper>
@@ -370,16 +374,6 @@ const About: React.FC = () => (
         </Avatar>
       </Divider>
 
-      <Typography 
-        variant="body2" 
-        sx={{ 
-          textAlign: 'center', 
-          color: 'text.secondary',
-          mt: 2
-        }}
-      >
-        © 2023 Планировщик Путешествий. Все права защищены.
-      </Typography>
     </Box>
   </Container>
 );

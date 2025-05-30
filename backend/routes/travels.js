@@ -1,8 +1,10 @@
 // backend/routes/travels.js
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const router = express.Router();
+
+// Импортируем необходимые модули
+const express = require('express'); // Express для роутинга
+const fs = require('fs'); // Для работы с файлами
+const path = require('path'); // Для работы с путями
+const router = express.Router(); // Создаем роутер
 
 const TRAVELS_FILE = path.join(__dirname, '../data/travels.json');
 const USERS_FILE = path.join(__dirname, '../data/users.json');
@@ -34,13 +36,15 @@ function writeUsers(users) {
   fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
 }
 
-// Получить список всех поездок
+// --- Получение списка всех туров ---
+// GET /travels
 router.get('/', (req, res) => {
   const travels = readTravels();
   res.json(travels);
 });
 
-// Получить детали одной поездки по ID
+// --- Получение тура по id ---
+// GET /travels/:id
 router.get('/:id', (req, res) => {
   const travels = readTravels();
   const travelId = parseInt(req.params.id, 10);
@@ -84,7 +88,8 @@ router.get('/user/:userId', (req, res) => {
   res.json(userTravels);
 });
 
-// Создать новую поездку
+// --- Добавление нового тура ---
+// POST /travels
 router.post('/', (req, res) => {
   const { title, city, description, date } = req.body;
   if (!title || !city || !date) {
@@ -103,7 +108,35 @@ router.post('/', (req, res) => {
   res.json(newTravel);
 });
 
-// Удалить тур
+// --- Обновление тура ---
+// PUT /travels/:id
+router.put('/:id', (req, res) => {
+  const travelId = parseInt(req.params.id, 10);
+  const updatedTravel = req.body;
+  const travels = readTravels();
+  const index = travels.findIndex(t => t.id === travelId);
+  if (index === -1) {
+    return res.status(404).json({ error: 'Тур не найден' });
+  }
+  travels[index] = { ...travels[index], ...updatedTravel };
+  writeTravels(travels);
+  res.json({ success: true });
+});
+
+// --- Удаление тура ---
+// DELETE /travels/:id
+router.delete('/:id', (req, res) => {
+  const travelId = parseInt(req.params.id, 10);
+  const travels = readTravels();
+  const newTravels = travels.filter(t => t.id !== travelId);
+  if (travels.length === newTravels.length) {
+    return res.status(404).json({ error: 'Тур не найден' });
+  }
+  writeTravels(newTravels);
+  res.json({ success: true });
+});
+
+// Удалить тур из списка пользователя
 router.delete('/user-tours/:userId/:travelId', (req, res) => {
   const userId = parseInt(req.params.userId, 10);
   const travelId = parseInt(req.params.travelId, 10);
@@ -191,4 +224,5 @@ router.post('/user/:userId/add', (req, res) => {
   });
 });
 
+// --- Экспорт роутера ---
 module.exports = router;
