@@ -37,6 +37,9 @@
     "username": "Danila",
     "email": "dshurik618@gmail.com",
     "password": "123456",
-    "avatar": null
+    "avatar": "1748696015352-19321057.webp",
+    "tours": [
+      111
+    ]
   }
 ]

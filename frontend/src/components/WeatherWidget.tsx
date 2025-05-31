@@ -35,7 +35,7 @@ interface WeatherWidgetProps {
 
 const getWeatherTheme = (weatherData: WeatherData) => {
   try {
-    if (!weatherData?.main?.temp || !weatherData?.weather?.[0]?.id) {
+    if (!weatherData?.main?.temp || !weatherData?.weather?.[0]?.id || !Array.isArray(weatherData.weather)) {
       return 'linear-gradient(135deg, #4CA1AF 0%, #C4E0E5 100%)'; // дефолтный градиент
     }
 
@@ -145,6 +145,14 @@ const getContrastColor = (background: string): string => {
 };
 
 const WeatherWidget: React.FC<WeatherWidgetProps> = ({ weather, isLoading, error }) => {
+  // Дополнительная проверка на валидность данных
+  const isValidWeather = weather && 
+    weather.main && 
+    weather.weather && 
+    Array.isArray(weather.weather) && 
+    weather.weather.length > 0 &&
+    weather.wind;
+
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 2 }}>
@@ -154,7 +162,7 @@ const WeatherWidget: React.FC<WeatherWidgetProps> = ({ weather, isLoading, error
     );
   }
 
-  if (error) {
+  if (error || !isValidWeather) {
     return (
       <Paper 
         elevation={1} 
@@ -170,7 +178,7 @@ const WeatherWidget: React.FC<WeatherWidgetProps> = ({ weather, isLoading, error
         }}
       >
         <Typography>
-          Не удалось загрузить данные о погоде
+          {error ? 'Не удалось загрузить данные о погоде' : 'Некорректные данные о погоде'}
         </Typography>
       </Paper>
     );

@@ -787,32 +787,7 @@
     ],
     "hotels": "https://travel.yandex.ru/hotels/kyoto-jp/",
     "flights": "https://travel.yandex.ru/flights/cities/kyoto-jp/",
-    "comments": [
-      {
-        "id": 1747902251415,
-        "userId": 5,
-        "username": "Danila",
-        "text": "пупуэ",
-        "rating": 5,
-        "date": "2025-05-22T08:24:11.415Z"
-      },
-      {
-        "id": 1747902266676,
-        "userId": 5,
-        "username": "Danila",
-        "text": "ъэ",
-        "rating": 5,
-        "date": "2025-05-22T08:24:26.676Z"
-      },
-      {
-        "id": 1747902283459,
-        "userId": 5,
-        "username": "Danila",
-        "text": ".у",
-        "rating": 2,
-        "date": "2025-05-22T08:24:43.459Z"
-      }
-    ]
+    "comments": []
   },
   {
     "id": 109,

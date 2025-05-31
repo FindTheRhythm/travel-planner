@@ -92,6 +92,7 @@ const TravelDetails: React.FC = () => {
   const [weatherError, setWeatherError] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   // State for comments
   const [comments, setComments] = useState<Comment[]>([]);
@@ -112,66 +113,114 @@ const TravelDetails: React.FC = () => {
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
     setIsLoading(true);
-    let travelData: Travel | null = null;
+    setError(null);
 
-    // Проверяем, сохранен ли тур у пользователя
-    const user = getCurrentUser();
-    if (user) {
-      fetch(`${API_BASE_URL}/travels/user/${user.id}`)
-        .then(res => res.json())
-        .then(tours => {
-          setIsSaved(tours.some((t: Travel) => t.id === Number(id)));
-        })
-        .catch(err => console.error('Error checking saved status:', err));
-    }
+    const fetchData = async () => {
+      try {
+        // Проверяем, сохранен ли тур у пользователя
+        const user = getCurrentUser();
+        if (user && isMounted) {
+          try {
+            const toursRes = await fetch(`${API_BASE_URL}/travels/user/${user.id}`);
+            const tours = await toursRes.json();
+            if (isMounted) {
+              setIsSaved(tours.some((t: Travel) => t.id === Number(id)));
+            }
+          } catch (err) {
+            console.error('Error checking saved status:', err);
+          }
+        }
 
-    // Получаем данные тура из popular-tours
-    fetch(`${API_BASE_URL}/popular-tours/${id}`)
-      .then(res => {
-        if (!res.ok) {
+        // Получаем данные тура из popular-tours
+        const tourRes = await fetch(`${API_BASE_URL}/popular-tours/${id}`);
+        if (!tourRes.ok) {
           throw new Error('Tour not found');
         }
-        return res.json();
-      })
-      .then(data => {
-        if (data) {
-          setTravel(data);
-          travelData = data;
-        } else {
+        const tourData = await tourRes.json();
+        
+        if (!tourData && isMounted) {
           throw new Error('Tour not found');
         }
-      })
-      .catch(err => {
-        console.error('Ошибка загрузки данных о путешествии:', err);
-        setTravel(null);
-        setIsLoading(false);
-        navigate('/404');
-        return;
-      });
 
-    // Получаем детали тура
-    fetch(`${API_BASE_URL}/travel-details`)
-      .then(res => res.json())
-      .then((data: TravelDetail[]) => {
-        const found = data.find(detail => detail.id === Number(id));
-        if (found) {
-          setDetails(found);
-        } else {
+        // Получаем детали тура
+        const detailsRes = await fetch(`${API_BASE_URL}/travel-details`);
+        const detailsData: TravelDetail[] = await detailsRes.json();
+        const foundDetails = detailsData.find(detail => detail.id === Number(id));
+
+        if (!foundDetails && isMounted) {
           throw new Error('Travel details not found');
         }
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error('Ошибка загрузки подробностей тура:', err);
-        setDetails(null);
-        setIsLoading(false);
-        navigate('/404');
-      });
-      
-    // Загрузка комментариев
-    fetchComments();
+
+        if (isMounted) {
+          setTravel(tourData);
+          setDetails(foundDetails || null);
+          setError(null);
+        }
+      } catch (err) {
+        console.error('Error fetching travel data:', err);
+        if (isMounted) {
+          setError(err instanceof Error ? err.message : 'Failed to load travel data');
+          navigate('/404');
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [id, navigate]);
+
+  // Обновляем useEffect для погоды
+  useEffect(() => {
+    let isMounted = true;
+    const API_KEY = '1da204be3fa32bb8734780b5a00f188e';
+    
+    const fetchWeather = async () => {
+      const cityName = travel?.city || details?.name?.split(',')[0];
+      if (!cityName) return;
+
+      try {
+        const res = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(cityName)}&units=metric&appid=${API_KEY}`
+        );
+        
+        if (!res.ok) {
+          throw new Error('Weather API error');
+        }
+        
+        const data = await res.json();
+        
+        if (isMounted && data?.main && Array.isArray(data.weather) && data.weather.length > 0) {
+          setWeather(data);
+          setWeatherError(false);
+        } else {
+          throw new Error('Invalid weather data structure');
+        }
+      } catch (err) {
+        console.error('Ошибка загрузки погоды:', err);
+        if (isMounted) {
+          setWeatherError(true);
+          setWeather(null);
+        }
+      }
+    };
+
+    if (travel?.city || details?.name) {
+      fetchWeather();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [travel, details]);
 
   // Функция для загрузки комментариев
   const fetchComments = () => {
@@ -332,34 +381,6 @@ const TravelDetails: React.FC = () => {
     navigate('/login');
   };
 
-  useEffect(() => {
-    const API_KEY = '1da204be3fa32bb8734780b5a00f188e';
-    const cityName = travel?.city || details?.name?.split(',')[0];
-
-    if (cityName) {
-      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(cityName)}&units=metric&appid=${API_KEY}`)
-        .then(res => {
-          if (!res.ok) {
-            throw new Error('Weather API error');
-          }
-          return res.json();
-        })
-        .then(data => {
-          if (data?.main && Array.isArray(data.weather) && data.weather.length > 0) {
-            setWeather(data);
-            setWeatherError(false);
-          } else {
-            throw new Error('Invalid weather data structure');
-          }
-        })
-        .catch(err => {
-          console.error('Ошибка загрузки погоды:', err);
-          setWeatherError(true);
-          setWeather(null);
-        });
-    }
-  }, [travel, details]);
-
   const handleSaveTrip = async () => {
     const user = getCurrentUser();
     if (!user) {
@@ -400,6 +421,14 @@ const TravelDetails: React.FC = () => {
     }
   };
 
+  if (error) {
+    return (
+      <Container sx={{ py: 4, textAlign: 'center' }}>
+        <Typography color="error">{error}</Typography>
+      </Container>
+    );
+  }
+
   if (isLoading) {
     return (
       <Container sx={{ py: 4, textAlign: 'center' }}>
@@ -409,8 +438,11 @@ const TravelDetails: React.FC = () => {
   }
 
   if (!travel || !details) {
-    navigate('/404');
-    return null;
+    return (
+      <Container sx={{ py: 4, textAlign: 'center' }}>
+        <Typography>Тур не найден</Typography>
+      </Container>
+    );
   }
 
   // Функция для форматирования даты комментария

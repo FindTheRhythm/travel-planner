@@ -76,10 +76,9 @@ try {
     // Каждый роутер отвечает за свою часть API
     const authRouter = require('./routes/auth'); // Аутентификация и регистрация
     const travelsRouter = require('./routes/travels'); // CRUD для туров
-    const popularTravelsRouter = require('./routes/popularTours'); // Популярные туры
+    const popularTravelsRouter = require('./routes/popularTours'); // Популярные туры и все туры
     const tipsRouter = require('./routes/tips'); // Советы путешественникам
     const travelDetailsRouter = require('./routes/travelDetails'); // Детальная инфа о туре
-    const allToursRouter = require('./routes/allTours'); // Список всех туров
     const profileRouter = require('./routes/profile'); // Профиль пользователя
 
     // Подключаем роутеры к соответствующим путям
@@ -88,7 +87,6 @@ try {
     app.use('/popular-tours', popularTravelsRouter);
     app.use('/tips', tipsRouter);
     app.use('/travel-details', travelDetailsRouter);
-    app.use('/all-tours', allToursRouter);
     app.use('/', profileRouter); // Профиль и связанные действия
 } catch (error) {
     console.error('Error loading routes:', error);

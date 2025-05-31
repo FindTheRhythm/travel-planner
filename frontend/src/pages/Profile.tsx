@@ -406,7 +406,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
     }
   };
 
-  const handleRemoveTravel = async (travelId: number, event: React.MouseEvent) => {
+  const handleDeleteTravel = async (travelId: number, event: React.MouseEvent) => {
     event.stopPropagation(); // Предотвращаем переход на страницу деталей
     try {
       const response = await fetch(`${API_BASE_URL}/travels/user-tours/${user.id}/${travelId}`, {
@@ -420,21 +420,16 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Ошибка удаления путешествия');
+        throw new Error(errorData.error || 'Ошибка удаления тура');
       }
 
+      // Обновляем состояние, удаляя тур из списка
       setSavedTravels(prev => prev.filter(travel => travel.id !== travelId));
-      showMessage('success', 'Путешествие удалено из сохраненных');
       
-      // Обновляем страницу через небольшую задержку для корректного отображения интерфейса
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      showMessage('success', 'Тур успешно удален из сохраненных');
     } catch (error) {
-      console.error('Error removing travel:', error);
-      showMessage('error', error instanceof Error 
-        ? error.message 
-        : 'Ошибка при удалении путешествия');
+      console.error('Error deleting travel:', error);
+      showMessage('error', error instanceof Error ? error.message : 'Ошибка при удалении тура');
     }
   };
 
@@ -605,15 +600,17 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                           <IconButton
                             sx={{
                               position: 'absolute',
-                              top: 8,
                               right: 8,
-                              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                              top: 8,
+                              color: 'white',
+                              backgroundColor: 'rgba(0, 0, 0, 0.5)',
                               '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 1)',
-                                color: 'error.main'
-                              }
+                                backgroundColor: 'rgba(244, 67, 54, 0.8)',
+                                transform: 'scale(1.1)',
+                                transition: 'all 0.2s ease-in-out'
+                              },
                             }}
-                            onClick={(e) => handleRemoveTravel(travel.id, e)}
+                            onClick={(e) => handleDeleteTravel(travel.id, e)}
                           >
                             <DeleteIcon />
                           </IconButton>

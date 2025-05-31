@@ -34,7 +34,7 @@ const TourExplorer: React.FC = () => {
 
   // Получаем данные туров
   useEffect(() => {
-    fetch(`${API_BASE_URL}/all-tours`)
+    fetch(`${API_BASE_URL}/popular-tours/all`)
       .then(response => response.json())
       .then(data => {
         setTours(data);
@@ -55,13 +55,10 @@ const TourExplorer: React.FC = () => {
             }
             return prev;
           });
-          
-          // Больше не очищаем URL от параметров тега
-          // Оставляем URL с параметром tag как есть
         }
       })
       .catch(error => console.error('Error fetching tours:', error));
-  }, []); // Выполняем только при монтировании компонента
+  }, []);
 
   useEffect(() => {
     let result = tours;

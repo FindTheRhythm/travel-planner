@@ -8,6 +8,12 @@ const router = express.Router(); // Создаем роутер
 
 const TRAVELS_FILE = path.join(__dirname, '../data/travels.json');
 const USERS_FILE = path.join(__dirname, '../data/users.json');
+const POPULAR_TOURS_FILE = path.join(__dirname, '../data/popular-tours.json');
+
+// Кэш для популярных туров
+let popularToursCache = null;
+let lastPopularToursRead = 0;
+const CACHE_TTL = 5 * 60 * 1000; // 5 минут в миллисекундах
 
 // Читать/записывать поездки из JSON
 function readTravels() {
@@ -36,24 +42,23 @@ function writeUsers(users) {
   fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
 }
 
-// --- Получение списка всех туров ---
-// GET /travels
-router.get('/', (req, res) => {
-  const travels = readTravels();
-  res.json(travels);
-});
-
-// --- Получение тура по id ---
-// GET /travels/:id
-router.get('/:id', (req, res) => {
-  const travels = readTravels();
-  const travelId = parseInt(req.params.id, 10);
-  const travel = travels.find(t => t.id === travelId);
-  if (!travel) {
-    return res.status(404).json({ error: 'Тур не найден.' });
+// Читать популярные туры с кэшированием
+function readPopularTours() {
+  const now = Date.now();
+  if (popularToursCache && (now - lastPopularToursRead) < CACHE_TTL) {
+    return popularToursCache;
   }
-  res.json(travel);
-});
+
+  try {
+    const data = fs.readFileSync(POPULAR_TOURS_FILE, 'utf8');
+    popularToursCache = JSON.parse(data);
+    lastPopularToursRead = now;
+    return popularToursCache;
+  } catch (err) {
+    console.error('Ошибка чтения популярных туров:', err);
+    return [];
+  }
+}
 
 // Получить путешествия пользователя
 router.get('/user/:userId', (req, res) => {
@@ -69,16 +74,8 @@ router.get('/user/:userId', (req, res) => {
     return res.json([]);
   }
 
-  // Читаем популярные туры
-  const popularToursPath = path.join(__dirname, '../data/popular-tours.json');
-  let popularTours;
-  try {
-    const data = fs.readFileSync(popularToursPath, 'utf8');
-    popularTours = JSON.parse(data);
-  } catch (err) {
-    console.error('Ошибка чтения популярных туров:', err);
-    return res.status(500).json({ error: 'Не удалось прочитать данные туров' });
-  }
+  // Получаем популярные туры из кэша
+  const popularTours = readPopularTours();
 
   // Получаем полную информацию о турах пользователя
   const userTravels = user.tours
@@ -86,54 +83,6 @@ router.get('/user/:userId', (req, res) => {
     .filter(tour => tour !== undefined);
 
   res.json(userTravels);
-});
-
-// --- Добавление нового тура ---
-// POST /travels
-router.post('/', (req, res) => {
-  const { title, city, description, date } = req.body;
-  if (!title || !city || !date) {
-    return res.status(400).json({ error: 'Необходимо указать название, город и дату.' });
-  }
-  const travels = readTravels();
-  const newTravel = {
-    id: travels.length > 0 ? travels[travels.length - 1].id + 1 : 1,
-    title,
-    city,
-    description: description || '',
-    date
-  };
-  travels.push(newTravel);
-  writeTravels(travels);
-  res.json(newTravel);
-});
-
-// --- Обновление тура ---
-// PUT /travels/:id
-router.put('/:id', (req, res) => {
-  const travelId = parseInt(req.params.id, 10);
-  const updatedTravel = req.body;
-  const travels = readTravels();
-  const index = travels.findIndex(t => t.id === travelId);
-  if (index === -1) {
-    return res.status(404).json({ error: 'Тур не найден' });
-  }
-  travels[index] = { ...travels[index], ...updatedTravel };
-  writeTravels(travels);
-  res.json({ success: true });
-});
-
-// --- Удаление тура ---
-// DELETE /travels/:id
-router.delete('/:id', (req, res) => {
-  const travelId = parseInt(req.params.id, 10);
-  const travels = readTravels();
-  const newTravels = travels.filter(t => t.id !== travelId);
-  if (travels.length === newTravels.length) {
-    return res.status(404).json({ error: 'Тур не найден' });
-  }
-  writeTravels(newTravels);
-  res.json({ success: true });
 });
 
 // Удалить тур из списка пользователя
@@ -182,24 +131,13 @@ router.post('/user/:userId/add', (req, res) => {
     return res.status(404).json({ error: 'Пользователь не найден' });
   }
 
-  // Читаем популярные туры для получения данных тура
-  const popularToursPath = path.join(__dirname, '../data/popular-tours.json');
-  let popularTours;
-  try {
-    const data = fs.readFileSync(popularToursPath, 'utf8');
-    popularTours = JSON.parse(data);
-    console.log('Прочитанные популярные туры:', popularTours[0]);
-  } catch (err) {
-    console.error('Ошибка чтения популярных туров:', err);
-    return res.status(500).json({ error: 'Не удалось прочитать данные туров' });
-  }
+  // Получаем популярные туры из кэша
+  const popularTours = readPopularTours();
 
   const travel = popularTours.find(t => t.id === travelId);
   if (!travel) {
     return res.status(404).json({ error: 'Тур не найден в списке популярных туров' });
   }
-
-  console.log('Найденный тур для добавления:', travel);
 
   const user = users[userIndex];
   if (!user.tours) {
@@ -213,7 +151,6 @@ router.post('/user/:userId/add', (req, res) => {
 
   // Добавляем id тура в список пользователя
   user.tours.push(travelId);
-  console.log('Добавляем тур:', travelId);
 
   users[userIndex] = user;
   writeUsers(users);
